@@ -27,6 +27,24 @@ public class Usuario {
 	public int getCedula() {
 		return cedula;
 	}
+	public List<Bolsillo> getBolsillos() {
+        	return bolsillos;
+    }
+	public List<Ahorro> getAhorros() {
+        	return ahorros;
+    }
+    	public List<Consignacion> getConsignaciones() {
+        	return consignaciones;
+    }
+    	public List<Retiro> getRetiros() {
+        	return retiros;
+    }
+    	public List<Prestamo> getPrestamos() {
+        	return prestamos;
+    }
+    	public List<Meta> getMetas() {
+        	return metas;
+    }
 	public void setNombre(String nombre) {
 		this.nombre=nombre;
 	}
@@ -37,8 +55,30 @@ public class Usuario {
 		this.correo=correo;
 	}
 	public int setCedula(int cedula) {
-		this.cedula=cedula;
+		this.cedula=cedula;}
+	
+	public void setBolsillos(List<Bolsillo> bolsillos) {
+	    this.bolsillos = bolsillos;
 	}
+	
+	public void setAhorros(List<Ahorro> ahorros) {
+        	this.ahorros = ahorros;
+    }
+	public void setConsignaciones(List<Consignacion> consignaciones) {
+        	this.consignaciones = consignaciones;
+    }
+	public void setRetiros(List<Retiro> retiros) {
+	    this.retiros = retiros;
+	    }
+	
+	public void setPrestamos(List<Prestamo> prestamos) {
+        	this.prestamos = prestamos;
+    }
+
+	public void setMetas(List<Meta> metas) {
+        	this.metas = metas;
+    }
+
 	//métodos
 
 	public void nuevaConsignacion(Consignacion consignacion) {
@@ -49,13 +89,13 @@ public class Usuario {
 
 	}
 
-	
+	//Se realiza un retiro validando su consistencia origen del usuario y se genera una salida en el historial
 
 	public boolean nuevoRetiro(Retiro retiro) {
 
 		boolean salida = retiro.getCuentaOrigen().retirar(retiro.getValorOrigen());
 
-		if(retirado){
+		if(salida){
 
 	retiros.add(salida);
 
@@ -99,7 +139,7 @@ public class Usuario {
 
 	}
 
-	
+	//Se realiza una separacion del dinero del usuario por divisas guardada en bolsillos, colchones y metas
 
 	public double[] getDineroTotal() {
 
