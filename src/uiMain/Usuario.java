@@ -49,7 +49,7 @@ public class Usuario {
 
 	}
 
-	//Se realiza un retiro validando su consistencia origen del usuario y se genera una salida en el historial
+	
 
 	public boolean nuevoRetiro(Retiro retiro) {
 
@@ -99,7 +99,7 @@ public class Usuario {
 
 	}
 
-	//Se realiza una separacion del dinero del usuario por divisas guardada en bolsillos, colchones y metas
+	
 
 	public double[] getDineroTotal() {
 
