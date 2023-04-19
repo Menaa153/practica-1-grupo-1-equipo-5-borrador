@@ -9,7 +9,7 @@ public class Usuario {
 	private int cedula;
 	private List<Bolsillo> bolsillos = new ArrayList<>();
 	private List<Ahorro> ahorros = new ArrayList<>();
-	private List<Consignacion> consignaciones = new ArrayList<>();
+	private List<Ingreso> ingresos = new ArrayList<>();
 	private List<Retiro> retiros = new ArrayList<>();
 	private List<Prestamo> prestamos = new ArrayList<>();
 	private List<Meta> metas = new ArrayList<>();
@@ -28,22 +28,22 @@ public class Usuario {
 		return cedula;
 	}
 	public List<Bolsillo> getBolsillos() {
-        	return bolsillos;
+        return bolsillos;
     }
 	public List<Ahorro> getAhorros() {
-        	return ahorros;
+        return ahorros;
     }
-    	public List<Consignacion> getConsignaciones() {
-        	return consignaciones;
+    public List<Ingresos> getIngresos() {
+        return ingresos;
     }
-    	public List<Retiro> getRetiros() {
-        	return retiros;
+    public List<Retiro> getRetiros() {
+        return retiros;
     }
-    	public List<Prestamo> getPrestamos() {
-        	return prestamos;
+    public List<Prestamo> getPrestamos() {
+        return prestamos;
     }
-    	public List<Meta> getMetas() {
-        	return metas;
+    public List<Meta> getMetas() {
+        return metas;
     }
 	public void setNombre(String nombre) {
 		this.nombre=nombre;
@@ -58,52 +58,49 @@ public class Usuario {
 		this.cedula=cedula;}
 	
 	public void setBolsillos(List<Bolsillo> bolsillos) {
-	    this.bolsillos = bolsillos;
-	}
+	    this.bolsillos = bolsillos;}
 	
 	public void setAhorros(List<Ahorro> ahorros) {
-        	this.ahorros = ahorros;
+        this.ahorros = ahorros;
     }
-	public void setConsignaciones(List<Consignacion> consignaciones) {
-        	this.consignaciones = consignaciones;
+	public void setIngresos(List<Ingreso> ingresos) {
+        this.ingresos = ingresos;
     }
+
 	public void setRetiros(List<Retiro> retiros) {
 	    this.retiros = retiros;
 	    }
 	
 	public void setPrestamos(List<Prestamo> prestamos) {
-        	this.prestamos = prestamos;
+        this.prestamos = prestamos;
     }
-
+	
 	public void setMetas(List<Meta> metas) {
-        	this.metas = metas;
+        this.metas = metas;
     }
 
 	//métodos
 
-	public void nuevaConsignacion(Consignacion consignacion) {
+	public void nuevoIngreso(Consignacion consignacion) {
 
 		consignacion.getCuentaDestino().depositar(consignacion.getValorDestino());
 
-		consignaciones.add(consignacion);
+		ingresos.add(consignacion);
 
 	}
 
 	//Se realiza un retiro validando su consistencia origen del usuario y se genera una salida en el historial
 
-	public boolean nuevoRetiro(Retiro retiro) {
+	public boolean nuevaSalida(Retiro retiro) {
 
 		boolean salida = retiro.getCuentaOrigen().retirar(retiro.getValorOrigen());
 
 		if(salida){
 
-	retiros.add(salida);
+			retiros.add(salida);
 
 	}
-
-	return salida;
-
-	}
+		return salida;}
 
 	public void nuevoBolsillo(Bolsillo bolsillo) {
 
@@ -111,31 +108,31 @@ public class Usuario {
 
 	}
 
-	public void nuevoColchon(Colchon colchon) {
+	public void nuevoAhorro(Ahorro ahorro) {
 
-	colchones.add(colchon);
+		ahorros.add(ahorro);
 
 	}
 
 	public void nuevaMeta(Meta meta) {
 
-	metas.add(meta);
+		metas.add(meta);
 
 	}
 
 	public void nuevoPrestamo(PrestamoLargoPlazo prestamo, Bolsillo bolsillo) {
 
-	prestamos.add(prestamo);
+		prestamos.add(prestamo);
 
 	bolsillo.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
 
 	}
 
-	public void nuevoPrestamo(PrestamoFugaz prestamo, Bolsillo bolsillo) {
+	public void nuevoPrestamo(PrestamoFugaz prestamo, Ahorro ahorro) {
 
-	prestamos.add(prestamo);
+		prestamos.add(prestamo);
 
-	bolsillo.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
+		ahorro.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
 
 	}
 
@@ -149,7 +146,7 @@ public class Usuario {
 
 	contables.addAll(getBolsillos());
 
-	contables.addAll(getColchones());
+	contables.addAll(getAhorros());
 
 	contables.addAll(getMetas());
 
