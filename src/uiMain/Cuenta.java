@@ -1,5 +1,9 @@
 package uiMain;
-import java.ArrayList;
+import gestorAplicacion.Ahorro;
+import gestorAplicacion.Bolsillo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cuenta {
 	private String nombre;
