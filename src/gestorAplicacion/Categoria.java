@@ -1,4 +1,4 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion;
 
 public enum Categoria {
 	Viajes,

@@ -1,4 +1,6 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion;
+
+import java.time.LocalDate;
 
 public class Meta {
 	private Usuario usuario;
@@ -103,7 +105,4 @@ public class Meta {
         usuario.nuevoIngreso(ingreso);
 		return ingreso;
 	}
-}
-
-
 }

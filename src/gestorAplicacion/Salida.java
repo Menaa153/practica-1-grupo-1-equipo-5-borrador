@@ -1,4 +1,6 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion;
+
+import java.time.LocalDate;
 
 public class Salida extends Transaccion{
 	private Cuenta cuentaOrigen;

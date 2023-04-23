@@ -1,4 +1,4 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion.classpropuestas;
 import java.ArrayList;
 
 public class Ingreso extends Transaccion{

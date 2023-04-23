@@ -1,4 +1,4 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion;
 import java.time.LocalDate;
 import java.ArrayList;
 

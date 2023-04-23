@@ -1,10 +1,10 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion;
 import java.time.LocalDate;
 
-public class Ahorro extends Cuenta{
+public class Ahorro extends gestorAplicacion.Cuenta {
 	private LocalDate fechaRetiro;
 	
-	public Colchon(Usuario usuario, String nombre, LocalDate fechaRetiro) {
+	public void Colchon(gestorAplicacion.Usuario usuario, String nombre, LocalDate fechaRetiro) {
 		super(usuario,nombre);
 		this.fechaRetiro=fechaRetiro;
 	}

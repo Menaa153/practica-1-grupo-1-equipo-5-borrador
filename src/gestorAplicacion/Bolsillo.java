@@ -1,4 +1,4 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion;
 
 public class Bolsillo extends Cuenta {
 	private Categoria categoria;
