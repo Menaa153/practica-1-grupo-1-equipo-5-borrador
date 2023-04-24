@@ -1,4 +1,4 @@
-package gestorAplicación;
+package gestorAplicacion;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
