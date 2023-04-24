@@ -1,5 +1,5 @@
-package gestorAplicacion;
-import java.ArrayList;
+package gestorAplicación.classpropuestas;
+import java.util.ArrayList;
 
 public abstract class Cuenta {
 	private String nombre;
