@@ -4,7 +4,7 @@ import java.time.LocalDate;
 public class Ahorro extends gestorAplicacion.Cuenta {
 	private LocalDate fechaRetiro;
 	
-	public void Colchon(gestorAplicacion.Usuario usuario, String nombre, LocalDate fechaRetiro) {
+	public Colchon(gestorAplicacion.Usuario usuario, String nombre, LocalDate fechaRetiro) {
 		super(usuario,nombre);
 		this.fechaRetiro=fechaRetiro;
 	}
