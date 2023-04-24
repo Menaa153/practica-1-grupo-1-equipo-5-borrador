@@ -2,66 +2,40 @@ package gestorAplicacion;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Ingreso extends Transaccion{
-	private Cuenta cuentaOrigen;
-	private Cuenta cuentaDestino;
-	private Categoria categoria;
+package gestorAplicación.classpropuestas;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
-	public Ingreso(int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
-		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, Categoria.Nulo);
+public abstract class Transaccion {
+	private int monto;
+	private LocalDate fechaCreacion;
+	protected static ArrayList<Transaccion> viajes = new ArrayList();
+	protected static ArrayList<Transaccion> salud = new ArrayList();
+	protected static ArrayList<Transaccion> alimentacion = new ArrayList();
+	protected static ArrayList<Transaccion> transporte = new ArrayList();
+	protected static ArrayList<Transaccion> educacion = new ArrayList();
+	protected static ArrayList<Transaccion> hogar = new ArrayList();
+	protected static ArrayList<Transaccion> entretenimiento = new ArrayList();
+	protected static ArrayList<Transaccion> imprevistos = new ArrayList();
+	protected static ArrayList<Transaccion> nulo = new ArrayList();
+	
+	protected Transaccion(int monto, LocalDate fechaCreacion) {
+		this.monto=monto;
+		this.fechaCreacion=fechaCreacion;
 	}
-	public Ingreso (int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino, Categoria categoria) {
-		super(monto, fechaCreacion);
-		this.cuentaOrigen=cuentaOrigen;
-		this.cuentaDestino=cuentaDestino;
-		this.categoria=categoria;
-		
-	if (categoria==Categoria.Viajes) {
-		Transaccion.viajes.add(this);
+	//setters y getters
+	public void setMonto(int monto) {
+		this.monto=monto;
 	}
-	if (categoria==Categoria.Salud) {
-		Transaccion.salud.add(this);
+	public void setFechaCreacion(LocalDate fechaCreacion) {
+		this.fechaCreacion=fechaCreacion;
 	}
-	if (categoria==Categoria.Alimentacion) {
-		Transaccion.alimentacion.add(this);
+	public int getMonto() {
+		return monto;
 	}
-	if (categoria==Categoria.Transporte) {
-		Transaccion.transporte.add(this);
-	}
-	if (categoria==Categoria.Educacion) {
-		Transaccion.educacion.add(this);
-	}
-	if (categoria==Categoria.Hogar) {
-		Transaccion.hogar.add(this);
-	}
-	if (categoria==Categoria.Entretenimiento) {
-		Transaccion.entretenimiento.add(this);
-	}
-	if (categoria==Categoria.Imprevistos) {
-		Transaccion.imprevistos.add(this);
-	}
-	if (categoria==Categoria.Nulo) {
-		Transaccion.nulo.add(this);
+	public LocalDate getFechaCreacion() {
+		return fechaCreacion;
 	}
 	
-	}
-	//getters y setters
-	public void setCuentaOrigen(Cuenta cuentaOrigen) {
-		this.cuentaOrigen=cuentaOrigen;
-	}
-	public void setCuentaDestino(Cuenta cuentaDestino) {
-		this.cuentaDestino=cuentaDestino;
-	}
-	public void setCategoria(Categoria categoria) {
-		this.categoria=categoria;
-	}
-	public Cuenta getCuentaOrigen() {
-		return cuentaOrigen;
-	}
-	public Cuenta getCuentaDestino() {
-		return cuentaDestino;
-	}
-	public Categoria getCategoria() {
-		return categoria;
-	}
+
 }
