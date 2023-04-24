@@ -1,5 +1,4 @@
-package gestorAplicacion;
-
+package gestorAplicación;
 import java.time.LocalDate;
 
 public class Salida extends Transaccion{
@@ -8,7 +7,7 @@ public class Salida extends Transaccion{
 	private Categoria categoria;
 
 	public Salida(int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
-		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, null);
+		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, Categoria.Nulo);
 	}
 	public Salida (int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino, Categoria categoria) {
 		super(monto, fechaCreacion);
