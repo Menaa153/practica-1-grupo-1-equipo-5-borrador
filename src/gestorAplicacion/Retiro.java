@@ -1,4 +1,4 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicación;
 import java.time.LocalDate;
 
 public class Salida extends Transaccion{
