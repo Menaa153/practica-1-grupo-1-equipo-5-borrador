@@ -1,4 +1,4 @@
-package gestorAplicación;
+package gestorAplicacion;
 import java.util.ArrayList;
 
 public class Usuario {
