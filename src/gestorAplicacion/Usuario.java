@@ -8,12 +8,12 @@ public class Usuario {
 	private String correo;
 	private Cuenta cuenta;
 	
-	private List<Bolsillo> bolsillos = new ArrayList<>();
-	private List<Ahorro> ahorros = new ArrayList<>();
-	private List<Ingreso> ingresos = new ArrayList<>();
-	private List<Retiro> retiros = new ArrayList<>();
-	private List<Prestamo> prestamos = new ArrayList<>();
-	private List<Meta> metas = new ArrayList<>();
+	private List<Bolsillo> bolsillos = new ArrayList<>;
+	private List<Ahorro> ahorros = new ArrayList<>;
+	private List<Ingreso> ingresos = new ArrayList<>;
+	private List<Retiro> retiros = new ArrayList<>;
+	private List<Prestamo> prestamos = new ArrayList<>;
+	private List<Meta> metas = new ArrayList<>;
 	
 	public Usuario(int cedula, String nombre, String correo) {
 
