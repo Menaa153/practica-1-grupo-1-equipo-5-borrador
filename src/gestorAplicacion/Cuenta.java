@@ -1,4 +1,4 @@
-package gestorAplicación.classpropuestas;
+package gestorAplicacion;
 import java.util.ArrayList;
 
 public abstract class Cuenta {
