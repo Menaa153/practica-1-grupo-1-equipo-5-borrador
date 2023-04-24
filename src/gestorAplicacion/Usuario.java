@@ -150,7 +150,7 @@ public class Usuario {
 
 		int total = 0;
 
-		List<Contable> contables = new ArrayList<>();
+		ArrayList<Contable> contables = new ArrayList();
 
 		contables.addAll(getBolsillos());
 
