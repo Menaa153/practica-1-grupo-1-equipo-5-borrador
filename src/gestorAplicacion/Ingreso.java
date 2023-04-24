@@ -8,7 +8,7 @@ public class Ingreso extends Transaccion{
 	private Categoria categoria;
 
 	public Ingreso(int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
-		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, null);
+		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, Categoria.nulo);
 	}
 	public Ingreso (int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino, Categoria categoria) {
 		super(monto, fechaCreacion);
