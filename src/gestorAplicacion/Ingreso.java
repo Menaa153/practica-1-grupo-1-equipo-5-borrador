@@ -1,5 +1,6 @@
-package gestorAplicacion.classpropuestas;
-import java.ArrayList;
+package gestorAplicacion;
+import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Ingreso extends Transaccion{
 	private Cuenta cuentaOrigen;
