@@ -8,7 +8,7 @@ public class Ahorro extends Cuenta{
 		super(nombre,usuario);
 		this.fechaRetiro=fechaRetiro;
 	}
-	public boolean retirar(double monto){
+	public boolean retirar(int monto){
 		if(this.fechaRetiro.isBefore(LocalDate.now())){
 			return super.retirar(monto);
 		}
