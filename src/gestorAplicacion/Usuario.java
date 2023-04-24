@@ -1,4 +1,4 @@
-package gestorAplicacion;
+package gestorAplicación;
 import java.util.ArrayList;
 
 public class Usuario {
@@ -30,39 +30,35 @@ public class Usuario {
 	public String getNombre() {
 		return nombre;
 	}
-	public String getCel() {
-		return cel;
-	}
+	
 	public String getCorreo() {
 		return correo;
 	}
 	public int getCedula() {
 		return cedula;
 	}
-	public List <Bolsillo> getBolsillos() {
-        return bolsillos;
+	public ArrayList <Bolsillo> getBolsillos() {
+        	return bolsillos;
     }
-	public List <Ahorro> getAhorros() {
-        return ahorros;
+	public ArrayList <Ahorro> getAhorros() {
+        	return ahorros;
     }
-    public List <Ingresos> getIngresos() {
-        return ingresos;
+    	public ArrayList <Ingresos> getIngresos() {
+        	return ingresos;
     }
-    public List <Retiro> getRetiros() {
-        return retiros;
+    	public ArrayList <Retiro> getRetiros() {
+        	return retiros;
     }
-    public List <Prestamo> getPrestamos() {
-        return prestamos;
+    	public ArrayList <Prestamo> getPrestamos() {
+        	return prestamos;
     }
-    public List <Meta> getMetas() {
-        return metas;
+   	public ArrayList <Meta> getMetas() {
+        	return metas;
     }
 	public void setNombre(String nombre) {
 		this.nombre=nombre;
 	}
-	public void setCel(String cel) {
-		this.cel=cel;
-	}
+	
 	public void setCorreo(String correo) {
 		this.correo=correo;
 	}
