@@ -43,7 +43,7 @@ public class Usuario {
 	public ArrayList <Ahorro> getAhorros() {
         	return ahorros;
     }
-    	public ArrayList <Ingresos> getIngresos() {
+    	public ArrayList <Ingreso> getIngresos() {
         	return ingresos;
     }
     	public ArrayList <Retiro> getRetiros() {
