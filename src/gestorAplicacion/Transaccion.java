@@ -2,10 +2,6 @@ package gestorAplicacion;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-package gestorAplicación.classpropuestas;
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 public abstract class Transaccion {
 	private int monto;
 	private LocalDate fechaCreacion;
