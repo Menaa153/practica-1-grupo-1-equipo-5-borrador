@@ -9,7 +9,18 @@ public class Meta {
     private LocalDate fechaCumplimiento;
     private LocalDate fechaInicio;
     private double objetivo;
-    private double saldo = 0;
+    private int saldo = 0;
+    
+    //constructor
+    public Meta(Usuario usuario, String nombre, LocalDate fechaInicio, double objetivo) {
+        this.nombre = nombre;
+        this.cumplida = false;
+        this.fechaCumplimiento = null;
+        this.fechaInicio = fechaInicio;
+        this.objetivo = objetivo;
+        this.usuario = usuario;
+        this.saldo = 0;
+    }
     
     public String getNombre() {
         return nombre;
@@ -53,7 +64,7 @@ public class Meta {
         return saldo;
     }
 
-    public void setSaldo(double saldo) {
+    public void setSaldo(int saldo) {
         this.saldo = saldo;
     }
 
@@ -81,27 +92,27 @@ public class Meta {
         this.fechaInicio = fechaInicio;
     }
 
-    @Override
-    public Movimiento abonar(double monto, Cuenta origen) {
+    
+    public Transaccion abonar(int monto, Cuenta origen) {
         if (!this.cumplida) {
-            Salida salida = new Salida(monto, LocalDate.now(), origen, null);
-            boolean retirado = this.usuario.nuevaSalida(salida);
+            Retiro retiro = new Retiro(monto, LocalDate.now(), origen, null);
+            boolean retirado = this.usuario.nuevoRetiro(retiro);
             if(!retirado) {
             	return null;
             }
-            this.saldo += monto2[0];
-            return salida;
+            this.saldo += monto;
+            return retiro;
         }
         return null;
     }
 
-	@Override
-	public Movimiento terminar(Cuenta cuenta) {
-		double[] nuevoSaldo = this.getDivisa().ConvertToDivisa(this.saldo, cuenta.getDivisa());
+	
+	public Transaccion terminar(Cuenta cuenta) {
+		int nuevoSaldo = this.saldo;
         this.saldo = 0;
         this.cumplida = true;
         this.fechaCumplimiento = LocalDate.now();
-        Ingreso ingreso = new Ingreso(nuevoSaldo[0], this.saldo, LocalDate.now(), true, null, null, cuenta, this.divisa, cuenta.getDivisa());
+        Ingreso ingreso = new Ingreso(nuevoSaldo, LocalDate.now(), null, cuenta);
         usuario.nuevoIngreso(ingreso);
 		return ingreso;
 	}
