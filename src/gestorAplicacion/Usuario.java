@@ -1,5 +1,5 @@
 package gestorAplicacion;
-import java.ArrayList;
+import java.util.ArrayList;
 
 public class Usuario {
 	//atributos
