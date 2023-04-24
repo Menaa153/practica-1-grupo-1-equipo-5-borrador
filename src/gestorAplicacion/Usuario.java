@@ -65,25 +65,25 @@ public class Usuario {
 	public int setCedula(int cedula) {
 		this.cedula=cedula;}
 	
-	public void setBolsillos(List<Bolsillo> bolsillos) {
+	public void setBolsillos(ArrayList<Bolsillo> bolsillos) {
 	    this.bolsillos = bolsillos;}
 	
-	public void setAhorros(List<Ahorro> ahorros) {
+	public void setAhorros(ArrayList<Ahorro> ahorros) {
         this.ahorros = ahorros;
     }
-	public void setIngresos(List<Ingreso> ingresos) {
+	public void setIngresos(ArrayList<Ingreso> ingresos) {
         this.ingresos = ingresos;
     }
 
-	public void setRetiros(List<Retiro> retiros) {
+	public void setRetiros(ArrayList<Retiro> retiros) {
 	    this.retiros = retiros;
 	    }
 	
-	public void setPrestamos(List<Prestamo> prestamos) {
+	public void setPrestamos(ArrayList<Prestamo> prestamos) {
         this.prestamos = prestamos;
     }
 	
-	public void setMetas(List<Meta> metas) {
+	public void setMetas(ArrayList<Meta> metas) {
         this.metas = metas;
     }
 
