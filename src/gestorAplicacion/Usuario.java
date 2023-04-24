@@ -1,6 +1,3 @@
-package gestorAplicacion;
-import java.util.ArrayList;
-
 public class Usuario {
 	//atributos
 	private int cedula;
