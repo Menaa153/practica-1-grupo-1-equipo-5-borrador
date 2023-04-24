@@ -6,7 +6,6 @@ public class Usuario {
 	private int cedula;
 	private String nombre;
 	private String correo;
-	private Cuenta cuenta;
 	
 	private ArrayList<Bolsillo> bolsillos = new ArrayList();
 	private ArrayList<Ahorro> ahorros = new ArrayList();
@@ -23,7 +22,6 @@ public class Usuario {
 		
 		this.correo=correo;
 		
-		new Cuenta("DEFAULT", this);
 		}
 	
 	//getters y setters
@@ -62,7 +60,7 @@ public class Usuario {
 	public void setCorreo(String correo) {
 		this.correo=correo;
 	}
-	public int setCedula(int cedula) {
+	public void setCedula(int cedula) {
 		this.cedula=cedula;}
 	
 	public void setBolsillos(ArrayList<Bolsillo> bolsillos) {
@@ -89,23 +87,23 @@ public class Usuario {
 
 	//métodos
 
-	public void nuevoIngreso(Consignacion consignacion) {
+	public void nuevoIngreso(Ingreso ingreso) {
 
-		consignacion.getCuentaDestino().depositar(consignacion.getValorDestino());
+		ingreso.getCuentaDestino().depositar(ingreso.getMonto());
 
-		ingresos.add(consignacion);
+		ingresos.add(ingreso);
 
 	}
 
 	//Se realiza un retiro validando su consistencia origen del usuario y se genera una salida en el historial
 
-	public boolean nuevaSalida(Retiro retiro) {
+	public boolean nuevoRetiro(Retiro retiro) {
 
-		boolean salida = retiro.getCuentaOrigen().retirar(retiro.getValorOrigen());
+		boolean salida = retiro.getCuentaOrigen().retirar(retiro.getMonto());
 
 		if(salida){
 
-			retiros.add(salida);
+			retiros.add(retiro);
 
 	}
 		return salida;}
@@ -128,21 +126,22 @@ public class Usuario {
 
 	}
 
-	public void nuevoPrestamo(PrestamoLargoPlazo prestamo, Bolsillo bolsillo) {
+//	public void nuevoPrestamo(PrestamoLargoPlazo prestamo, Bolsillo bolsillo) {
 
-		prestamos.add(prestamo);
+		//prestamos.add(prestamo);
 
-	bolsillo.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
+		//bolsillo.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
 
-	}
+	
+	//
 //sobrecarga de método nuevoprestamo
-	public void nuevoPrestamo(PrestamoFugaz prestamo, Ahorro ahorro) {
+	//public void nuevoPrestamo(PrestamoFugaz prestamo, Ahorro ahorro) {
 
-		prestamos.add(prestamo);
+		//prestamos.add(prestamo);
 
-		ahorro.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
+		//ahorro.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
 
-	}
+//}
 
 	//Se realiza una separacion del dinero del usuario por divisas guardada en bolsillos, colchones y metas
 
@@ -150,13 +149,13 @@ public class Usuario {
 
 		int total = 0;
 
-		ArrayList<Contable> contables = new ArrayList();
+		ArrayList<Cuenta> contables = new ArrayList();
 
 		contables.addAll(getBolsillos());
 
 		contables.addAll(getAhorros());
 
-		for (Contable i : contables) {
+		for (Cuenta i : contables) {
 
 			total+=i.getSaldo();
 		}
