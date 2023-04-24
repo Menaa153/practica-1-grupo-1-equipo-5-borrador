@@ -1,7 +1,7 @@
 package gestorAplicacion;
 import java.time.LocalDate;
 
-public class Salida extends Transaccion{
+public class Retiro extends Transaccion{
 	private Cuenta cuentaOrigen;
 	private Cuenta cuentaDestino;
 	private Categoria categoria;
