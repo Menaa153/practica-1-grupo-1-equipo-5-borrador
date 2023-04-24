@@ -1,4 +1,4 @@
-package gestorAplicación;
+package gestorAplicacion;
 import java.time.LocalDate;
 
 public class Ahorro extends Cuenta{
