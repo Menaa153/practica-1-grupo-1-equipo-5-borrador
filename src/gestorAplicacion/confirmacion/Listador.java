@@ -10,6 +10,7 @@ import gestorAplicacion.Bolsillo;
 import gestorAplicacion.Ahorro;
 import gestorAplicacion.Meta;
 import gestorAplicacion.Usuario;
+import gestorAplicacion.Categoria;
 
 public class Listador {
     //Se listan las garantias del sistema
@@ -24,21 +25,14 @@ public class Listador {
     //}
     
     //Se listan los bolsillos del usuario que pasa como referencia
-    public static boolean listarBolsillos(Usuario usuario) {
-        System.out.println("---------------------------------------------------------");
-        if (!usuario.getBolsillos().isEmpty()) {
-            int j = 1;
-            for (Bolsillo i : usuario.getBolsillos()) {
-                System.out.println(j + ". " + i.getNombre() + "\t\tDisponible: " + String.format("%.2f",i.getSaldo()));
-                j++;
-            }
-            System.out.println("---------------------------------------------------------");
-            return true;
-        } else {
-            System.out.println("EL USUARIO NO POSEE BOLSILLOS...\n");
-            System.out.println("---------------------------------------------------------");
-            return false;
+    public static void listarBolsillos() {
+        int j = 1;
+    	System.out.println("--------------------------------------------------------------------------");
+        for (Categoria i : Categoria.values()) {
+            System.out.println(j + ". " + i);
+            j++;
         }
+    	System.out.println("--------------------------------------------------------------------------");
     }
     
   //Se listan los Ahorros del usuario que se seleccionó en el login()

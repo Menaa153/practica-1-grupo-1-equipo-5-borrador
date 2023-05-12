@@ -2,6 +2,8 @@ package gestorAplicacion;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
+import gestorAplicacion.confirmacion.Alerta;
+
 public class Ingreso extends Transaccion{
 	private Cuenta cuentaOrigen;
 	private Cuenta cuentaDestino;
@@ -15,34 +17,42 @@ public class Ingreso extends Transaccion{
 		this.cuentaOrigen=cuentaOrigen;
 		this.cuentaDestino=cuentaDestino;
 		this.categoria=categoria;
+
+		categoria.setSaldo(categoria.getSaldo()+monto);
+
+		if (categoria!=Categoria.Nulo){
+		  if (categoria.getSaldo()>=categoria.getPresupuesto()){
+			System.out.println(Alerta.Excede(categoria));
+		  }
+	    }
 		
-	if (categoria==Categoria.Viajes) {
+	 if (categoria==Categoria.Viajes) {
 		Transaccion.viajes.add(this);
-	}
-	if (categoria==Categoria.Salud) {
+	 }
+	 if (categoria==Categoria.Salud) {
 		Transaccion.salud.add(this);
-	}
-	if (categoria==Categoria.Alimentacion) {
+	 }
+	 if (categoria==Categoria.Alimentacion) {
 		Transaccion.alimentacion.add(this);
-	}
-	if (categoria==Categoria.Transporte) {
+	 }
+	 if (categoria==Categoria.Transporte) {
 		Transaccion.transporte.add(this);
-	}
-	if (categoria==Categoria.Educacion) {
+	 }
+	 if (categoria==Categoria.Educacion) {
 		Transaccion.educacion.add(this);
-	}
-	if (categoria==Categoria.Hogar) {
+	 }
+	 if (categoria==Categoria.Hogar) {
 		Transaccion.hogar.add(this);
-	}
-	if (categoria==Categoria.Entretenimiento) {
+	 }
+	 if (categoria==Categoria.Entretenimiento) {
 		Transaccion.entretenimiento.add(this);
-	}
-	if (categoria==Categoria.Imprevistos) {
+	 }
+	 if (categoria==Categoria.Imprevistos) {
 		Transaccion.imprevistos.add(this);
-	}
-	if (categoria==Categoria.Nulo) {
+	 }
+	 if (categoria==Categoria.Nulo) {
 		Transaccion.nulo.add(this);
-	}
+	 }
 	
 	}
 	//getters y setters

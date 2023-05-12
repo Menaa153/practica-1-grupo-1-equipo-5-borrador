@@ -7,7 +7,6 @@ public class Usuario {
 	private String nombre;
 	private String correo;
 	
-	private ArrayList<Bolsillo> bolsillos = new ArrayList();
 	private ArrayList<Ahorro> ahorros = new ArrayList();
 	private ArrayList<Ingreso> ingresos = new ArrayList();
 	private ArrayList<Retiro> retiros = new ArrayList();
@@ -35,9 +34,7 @@ public class Usuario {
 	public int getCedula() {
 		return cedula;
 	}
-	public ArrayList <Bolsillo> getBolsillos() {
-        	return bolsillos;
-    }
+
 	public ArrayList <Ahorro> getAhorros() {
         	return ahorros;
     }
@@ -62,9 +59,6 @@ public class Usuario {
 	}
 	public void setCedula(int cedula) {
 		this.cedula=cedula;}
-	
-	public void setBolsillos(ArrayList<Bolsillo> bolsillos) {
-	    this.bolsillos = bolsillos;}
 	
 	public void setAhorros(ArrayList<Ahorro> ahorros) {
         this.ahorros = ahorros;
@@ -108,11 +102,6 @@ public class Usuario {
 	}
 		return salida;}
 
-	public void nuevoBolsillo(Bolsillo bolsillo) {
-
-		bolsillos.add(bolsillo);
-
-	}
 
 	public void nuevoAhorro(Ahorro ahorro) {
 
@@ -149,16 +138,16 @@ public class Usuario {
 
 		int total = 0;
 
-		ArrayList<Cuenta> contables = new ArrayList();
-
-		contables.addAll(getBolsillos());
-
-		contables.addAll(getAhorros());
-
-		for (Cuenta i : contables) {
+		for (Ahorro i : ahorros) {
 
 			total+=i.getSaldo();
 		}
+
+		for (Categoria categoria: Categoria.values()){
+			total+=categoria.getSaldo();
+
+		}
+
 		return total;
 	}
 		
