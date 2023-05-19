@@ -109,8 +109,8 @@ public class Main {
         List<Cuenta> list = new ArrayList<>();
         switch (option) {
             case 1 -> {
-                System.out.println("Bolsillos: ");
-                bool = Utils.listarBolsillos(usuario);
+                System.out.println("¿Cuál Bolsillo?: ");
+                bool = Listador.listarBolsillos();
                 list.addAll(usuario.getBolsillos());
             }
             case 2 -> {

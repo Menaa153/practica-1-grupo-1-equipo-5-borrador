@@ -25,7 +25,7 @@ public class Listador {
     //}
     
     //Se listan los bolsillos del usuario que pasa como referencia
-    public static void listarBolsillos() {
+    public static boolean listarBolsillos() {
         int j = 1;
     	System.out.println("--------------------------------------------------------------------------");
         for (Categoria i : Categoria.values()) {
@@ -33,6 +33,7 @@ public class Listador {
             j++;
         }
     	System.out.println("--------------------------------------------------------------------------");
+        return true;
     }
     
   //Se listan los Ahorros del usuario que se seleccionó en el login()
