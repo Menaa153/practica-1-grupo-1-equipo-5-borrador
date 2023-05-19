@@ -143,9 +143,13 @@ public class Usuario {
 			total+=i.getSaldo();
 		}
 
-		for (Categoria categoria: Categoria.values()){
-			total+=categoria.getSaldo();
+		for (Categoria i: Categoria.values()){
+			total+=i.getSaldo();
 
+		}
+
+		for (Meta i:metas){
+			total+=i.getSaldo();
 		}
 
 		return total;
