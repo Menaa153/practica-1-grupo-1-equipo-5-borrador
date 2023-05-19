@@ -83,9 +83,11 @@ public class Usuario {
 
 	public void nuevoIngreso(Ingreso ingreso) {
 
+		if (ingreso.getCuentaDestino()!=null){
 		ingreso.getCuentaDestino().depositar(ingreso.getMonto());
-
 		ingresos.add(ingreso);
+		}
+	
 
 	}
 

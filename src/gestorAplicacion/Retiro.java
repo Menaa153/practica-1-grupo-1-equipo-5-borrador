@@ -17,33 +17,7 @@ public class Retiro extends Transaccion{
 
 		categoria.setSaldo(categoria.getSaldo()-monto);
 		
-	 if (categoria==Categoria.Viajes) {
-		Transaccion.viajes.add(this);
-	 }
-	 if (categoria==Categoria.Salud) {
-		Transaccion.salud.add(this);
-	 }
-	 if (categoria==Categoria.Alimentacion) {
-		Transaccion.alimentacion.add(this);
-	 }
-	 if (categoria==Categoria.Transporte) {
-		Transaccion.transporte.add(this);
-	 }
-	 if (categoria==Categoria.Educacion) {
-		Transaccion.educacion.add(this);
-	 }
-	 if (categoria==Categoria.Hogar) {
-		Transaccion.hogar.add(this);
-	 }
-	 if (categoria==Categoria.Entretenimiento) {
-		Transaccion.entretenimiento.add(this);
-	 }
-	 if (categoria==Categoria.Imprevistos) {
-		Transaccion.imprevistos.add(this);
-	 }
-	 if (categoria==Categoria.Nulo) {
-		Transaccion.nulo.add(this);
-	 }
+	 
 	}
 	//getters y setters
 	public void setCuentaOrigen(Cuenta cuentaOrigen) {

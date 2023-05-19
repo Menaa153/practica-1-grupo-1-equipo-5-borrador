@@ -39,9 +39,9 @@ public class Main {
             System.out.println("3. Mover dinero en su cuenta");
             System.out.println("4. Enviar y sacar dinero de su cuenta");
             System.out.println("5. Agregar bolsillo a su cuenta");
-            System.out.println("6. Agregar colchón a su cuenta");
+            System.out.println("6. Agregar Ahorro a su cuenta");
             System.out.println("7. Agregar Meta a su cuenta");
-            System.out.println("8. Modificar Colchón/Bolsillo/Meta");
+            System.out.println("8. Modificar Ahorro/Bolsillo/Meta");
             System.out.println("9. Solicitar Préstamo");
             System.out.println("10. Abonar a un préstamo o Meta");
             System.out.println("11. Logout");
@@ -54,7 +54,7 @@ public class Main {
                 case 3 -> moverDineroInterno();
                 case 4 -> enviarYSacarDinero();
                 case 5 -> agregarBolsillo();
-                case 6 -> agregarColchon();
+                case 6 -> agregarAhorro();
                 case 7 -> agregarMeta();
                 case 8 -> opcionModificar();
                 case 9 -> solicitarPrestamo();
@@ -75,7 +75,7 @@ public class Main {
         int option;
         System.out.println("¿Qué cuentas desea visualizar?");
         System.out.println("1. Bolsillos");
-        System.out.println("2. Colchones");
+        System.out.println("2. Ahorros");
         System.out.println("3. Metas");
         System.out.println("4. Dinero total");
         System.out.println("5. Volver al inicio");
@@ -102,90 +102,140 @@ public class Main {
         int option, opc;
         System.out.println("¿Para donde va su dinero?");
         System.out.println("1. Bolsillos");
-        System.out.println("2. Colchones");
+        System.out.println("2. Ahorros");
         System.out.println("3. Volver al inicio");
         option = validarEntradaInt(3, true, 1, true);
         boolean bool = false;
-        List<Cuenta> list = new ArrayList<>();
         switch (option) {
             case 1 -> {
-                System.out.println("¿Cuál Bolsillo?: ");
+                List<Categoria> list=new ArrayList<>();
+                System.out.println("Bolsillo: ");
                 bool = Listador.listarBolsillos();
-                list.addAll(usuario.getBolsillos());
+
+                for(Categoria bolsillos:Categoria.values()){
+                  list.add(bolsillos);
+                } 
+
+                if (bool) {
+                    opc = validarEntradaInt(8, true, 1, true) - 1;
+                    Categoria bolsillo=list.get(opc);
+
+                    double cantidad;
+                    System.out.println("Digite la cantidad que desea ingresar en (utilice ',' para el símbolo decimal) (Cantidad maxima 10000000): ");
+                    cantidad = Verificacion.validarEntradaDouble(10000000, true, 0, false);
+                    Ingreso ingreso = new Ingreso((int)cantidad, LocalDate.now(), bolsillo);
+                    System.out.println("Su nuevo saldo es de " + String.format("%.2f",bolsillo.getSaldo()));
+
+                  } 
             }
             case 2 -> {
-                System.out.println("Colchones: ");
-                bool = Utils.listarColchones(usuario);
-                list.addAll(usuario.getColchones());
-            }
-        }
-        if (bool) {
-            opc = validarEntradaInt(list.size(), true, 1, true) - 1;
-            electionBancoMonto(list.get(opc));
+                List<Cuenta> list = new ArrayList<>();
+                System.out.println("Ahorro: ");
+                bool = Listador.listarAhorros(usuario);
+                list.addAll(usuario.getAhorros());
+            
+             if (bool) {
+               opc = validarEntradaInt(list.size(), true, 1, true) - 1;
+               Cuenta cuenta=list.get(opc);
+
+               double cantidad;
+               System.out.println("Digite la cantidad que desea ingresar en (utilice ',' para el símbolo decimal) (Cantidad maxima 10000000): ");
+               cantidad = Verificacion.validarEntradaDouble(10000000, true, 0, false);
+               Ingreso ingreso = new Ingreso((int)cantidad, LocalDate.now(), cuenta);
+               usuario.nuevoIngreso(ingreso);
+               System.out.println("Su nuevo saldo es de " + String.format("%.2f",cuenta.getSaldo()));
+
+             }
+            } 
         }
     }
 
-    //Se selecciona el banco por medio del cual hará el ingreso de dinero y se pide la cantidad en la divisa actual de la cuenta
-    static void electionBancoMonto(Cuenta cuenta) {
-        int opcBanco;
-        double cantidad;
-        System.out.println("Elija el banco por medio del cual quiere hacer el ingreso");
-        Utils.listarBancos();
-        opcBanco = validarEntradaInt(Banco.values().length, true, 1, true) - 1;
-        System.out.println("Digite la cantidad que desea ingresar en " + cuenta.getDivisa() + " (utilice ',' para el símbolo decimal) (Cantidad maxima 10000000): ");
-        cantidad = Validador.validarEntradaDouble(10000000, true, 0, false);
-        Ingreso ingreso = new Ingreso(cantidad, LocalDate.now(), Banco.values()[opcBanco], cuenta, cuenta.getDivisa());
-        usuario.nuevoIngreso(ingreso);
-        System.out.println("Su nuevo saldo es de " + String.format("%.2f",cuenta.getSaldo()) + " " + cuenta.getDivisa());
-    }
 
     //Opcion3
     static void moverDineroInterno() {
         int option;
-        Cuenta destino, origen;
         System.out.println("¿Para donde va su dinero?");
         System.out.println("1. Bolsillos");
-        System.out.println("2. Colchones");
+        System.out.println("2. Ahorros");
         System.out.println("3. Volver al inicio");
         option = validarEntradaInt(3, true, 1, true);
         boolean bool = false;
-        List<Cuenta> list = new ArrayList<>();
         switch (option) {
             case 1 -> {
+                Categoria destino; 
+                Object origen;
+                List<Categoria> list = new ArrayList<>();
                 System.out.println("Bolsillos: ");
-                bool = Utils.listarBolsillos(usuario);
-                list.addAll(usuario.getBolsillos());
+                bool = Listador.listarBolsillos();
+
+                for(Categoria bolsillos:Categoria.values()){
+                    list.add(bolsillos);
+                  } 
+                
+                if (bool) {
+                    int opc = validarEntradaInt(8, true, 1, true) - 1;
+                    destino = list.get(opc);
+                    origen = seleccionarCuentaDeOrigen(destino);
+
+                    if (origen instanceof Cuenta){
+                        origen=(Cuenta)origen;
+                        if (origen != null && origen.getSaldo() > 0) {
+                        System.out.println("Ingrese la cantidad a transferir (en " + origen.getDivisa() + ")(entre 0 y " + String.format("%.2f",origen.getSaldo()) + ")");
+                        double monto = Validador.validarEntradaDouble(origen.getSaldo(), true, 0, false);
+                        double[] monto2 = origen.getDivisa().ConvertToDivisa(monto, destino.getDivisa());
+                        boolean retirado = origen.retirar(monto);
+                        if (!retirado) {
+                            System.err.println("No fue posible retirar");
+                            return;
+                        }
+                        destino.depositar(monto2[0]);
+                        System.out.println("Movimiento exitosos con una trm de: " + String.format("%.2f",monto2[1]));
+                        System.out.println("Nuevo saldo en el origen de: " + String.format("%.2f",origen.getSaldo()));
+                        System.out.println("Nuevo saldo en el destino de: " + String.format("%.2f",destino.getSaldo()));
+                        }else {
+            	        System.out.println("La cuenta no existe o no contiene dinero");
+                        }
+                    }
+
+
+
+
             }
+            }
+
             case 2 -> {
+                Cuenta destino, origen;
+                List<Cuenta> list = new ArrayList<>();
                 System.out.println("Colchones: ");
-                bool = Utils.listarColchones(usuario);
-                list.addAll(usuario.getColchones());
-            }
-        }
-        if (bool) {
-            int opc = validarEntradaInt(list.size(), true, 1, true) - 1;
-            destino = list.get(opc);
-            origen = seleccionarCuentaDeOrigen(destino);
-            if (origen != null && origen.getSaldo()>0) {
-                System.out.println("Ingrese la cantidad a transferir (en " + origen.getDivisa() + ")(entre 0 y " + String.format("%.2f",origen.getSaldo()) + ")");
-                double monto = Validador.validarEntradaDouble(origen.getSaldo(), true, 0, false);
-                double[] monto2 = origen.getDivisa().ConvertToDivisa(monto, destino.getDivisa());
-                boolean retirado = origen.retirar(monto);
-                if (!retirado) {
-                	System.err.println("No fue posible retirar");
-                    return;
+                bool = Listador.listarAhorros(usuario);
+                list.addAll(usuario.getAhorros());
+        
+                if (bool) {
+                    int opc = validarEntradaInt(list.size(), true, 1, true) - 1;
+                    destino = list.get(opc);
+                    origen = seleccionarCuentaDeOrigen(destino);
+                    if (origen != null && origen.getSaldo()>0) {
+                        System.out.println("Ingrese la cantidad a transferir (en " + origen.getDivisa() + ")(entre 0 y " + String.format("%.2f",origen.getSaldo()) + ")");
+                        double monto = Validador.validarEntradaDouble(origen.getSaldo(), true, 0, false);
+                        double[] monto2 = origen.getDivisa().ConvertToDivisa(monto, destino.getDivisa());
+                        boolean retirado = origen.retirar(monto);
+                        if (!retirado) {
+                            System.err.println("No fue posible retirar");
+                            return;
+                        }
+                        destino.depositar(monto2[0]);
+                        System.out.println("Movimiento exitosos con una trm de: " + String.format("%.2f",monto2[1]));
+                        System.out.println("Nuevo saldo en el origen de: " + String.format("%.2f",origen.getSaldo()));
+                        System.out.println("Nuevo saldo en el destino de: " + String.format("%.2f",destino.getSaldo()));
+                    }else {
+            	        System.out.println("La cuenta no existe o no contiene dinero");
+                    }
                 }
-                destino.depositar(monto2[0]);
-                System.out.println("Movimiento exitosos con una trm de: " + String.format("%.2f",monto2[1]));
-                System.out.println("Nuevo saldo en el origen de: " + String.format("%.2f",origen.getSaldo()));
-                System.out.println("Nuevo saldo en el destino de: " + String.format("%.2f",destino.getSaldo()));
-            }else {
-            	System.out.println("La cuenta no existe o no contiene dinero");
             }
         }
     }
 
-    static Cuenta seleccionarCuentaDeOrigen(Cuenta destino) {
+    static Cuenta seleccionarCuentaDeOrigen(Object destino) {
         boolean repet = false;
         do {
             int option, opc;
@@ -193,7 +243,7 @@ public class Main {
             repet = false;
             System.out.println("¿De donde sale su dinero?");
             System.out.println("1. Bolsillos");
-            System.out.println("2. Colchones");
+            System.out.println("2. Ahorros");
             System.out.println("3. Volver al inicio");
             option = validarEntradaInt(3, true, 1, true);
             boolean bool = false;
@@ -297,7 +347,7 @@ public class Main {
 
     //OPCIÓN6
     //Se agrega un colchón al usuario que se seleccionó en el login() con el nombre, la divisa y la fecha de retiro seleccionada por el usuario
-    static void agregarColchon() {
+    static void agregarAhorro() {
         int divisa, fecha;
         String nombre;
         System.out.println("Elija la divisa que desea utilizar en el colchón");

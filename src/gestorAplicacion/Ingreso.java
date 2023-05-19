@@ -12,6 +12,21 @@ public class Ingreso extends Transaccion{
 	public Ingreso(int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
 		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, Categoria.Nulo);
 	}
+
+	public Ingreso (int monto, LocalDate fechaCreacion, Cuenta cuentaDestino, Categoria categoria){
+		this (monto, fechaCreacion, null, cuentaDestino, categoria);
+
+	}
+
+	public Ingreso(int monto, LocalDate fechaCreacion,Cuenta cuentaDestino){
+		this (monto, fechaCreacion, null, cuentaDestino, Categoria.Nulo);
+	}
+
+	public Ingreso (int monto, LocalDate fechaCreacion, Categoria categoria){
+		this (monto, fechaCreacion, null, null, categoria);
+
+	}
+
 	public Ingreso (int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino, Categoria categoria) {
 		super(monto, fechaCreacion);
 		this.cuentaOrigen=cuentaOrigen;
@@ -26,33 +41,7 @@ public class Ingreso extends Transaccion{
 		  }
 	    }
 		
-	 if (categoria==Categoria.Viajes) {
-		Transaccion.viajes.add(this);
-	 }
-	 if (categoria==Categoria.Salud) {
-		Transaccion.salud.add(this);
-	 }
-	 if (categoria==Categoria.Alimentacion) {
-		Transaccion.alimentacion.add(this);
-	 }
-	 if (categoria==Categoria.Transporte) {
-		Transaccion.transporte.add(this);
-	 }
-	 if (categoria==Categoria.Educacion) {
-		Transaccion.educacion.add(this);
-	 }
-	 if (categoria==Categoria.Hogar) {
-		Transaccion.hogar.add(this);
-	 }
-	 if (categoria==Categoria.Entretenimiento) {
-		Transaccion.entretenimiento.add(this);
-	 }
-	 if (categoria==Categoria.Imprevistos) {
-		Transaccion.imprevistos.add(this);
-	 }
-	 if (categoria==Categoria.Nulo) {
-		Transaccion.nulo.add(this);
-	 }
+	 
 	
 	}
 	//getters y setters

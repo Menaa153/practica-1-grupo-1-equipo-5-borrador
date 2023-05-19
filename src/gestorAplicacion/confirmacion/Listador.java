@@ -6,7 +6,6 @@ import static java.time.temporal.ChronoUnit.MONTHS;
 
 //import gestorAplicacion.economia.Garantia;
 //import gestorAplicacion.Prestamo;
-import gestorAplicacion.Bolsillo;
 import gestorAplicacion.Ahorro;
 import gestorAplicacion.Meta;
 import gestorAplicacion.Usuario;
@@ -29,8 +28,14 @@ public class Listador {
         int j = 1;
     	System.out.println("--------------------------------------------------------------------------");
         for (Categoria i : Categoria.values()) {
-            System.out.println(j + ". " + i);
-            j++;
+            if (j<9){
+                System.out.println(j + ". " + i);
+                j++;
+            }
+
+            else{
+                break;
+            }
         }
     	System.out.println("--------------------------------------------------------------------------");
         return true;
