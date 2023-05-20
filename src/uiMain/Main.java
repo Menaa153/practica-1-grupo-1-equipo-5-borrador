@@ -37,7 +37,7 @@ public class Main {
             System.out.println("1. Ver Estadisticas de la cuenta");
             System.out.println("2. Ingresar dinero a su cuenta");
             System.out.println("3. Mover dinero en su cuenta");
-            System.out.println("4. Enviar y sacar dinero de su cuenta");
+            System.out.println("4. Sacar dinero de su cuenta");
             System.out.println("5. Agregar bolsillo a su cuenta");
             System.out.println("6. Agregar Ahorro a su cuenta");
             System.out.println("7. Agregar Meta a su cuenta");
@@ -52,7 +52,7 @@ public class Main {
                 case 1 -> saldosDisponibles();
                 case 2 -> ingresaDinero();
                 case 3 -> moverDineroInterno();
-                case 4 -> enviarYSacarDinero();
+                case 4 -> SacarDinero();
                 case 5 -> agregarBolsillo();
                 case 6 -> agregarAhorro();
                 case 7 -> agregarMeta();
@@ -293,7 +293,7 @@ public class Main {
         }
     }
 
-    static Cuenta seleccionarCuentaDeOrigen(Object destino) {
+    static Object seleccionarCuentaDeOrigen(Object destino) {
         boolean repet = false;
         do {
             int option, opc;
@@ -308,7 +308,6 @@ public class Main {
             
             switch (option) {
                 case 1 -> {
-                    origen=(Categoria) origen;
                     List<Categoria> list = new ArrayList<>();
                     System.out.println("Bolsillos: ");
                     bool = Listador.listarBolsillos();
@@ -324,14 +323,13 @@ public class Main {
                             System.out.println("NO PUEDES ENVIAR EL DINERO AL MISMO LUGAR");
                              repet = true;
                         } else {
-                            return (Categoria) origen;
+                            return origen;
                         }
                     }
                     
                 
                 }
                 case 2 -> {
-                    origen=(Cuenta)origen;
                     List<Cuenta> list = new ArrayList<>();
                     System.out.println("Ahorros: ");
                     bool = Listador.listarAhorros(usuario);
@@ -344,7 +342,7 @@ public class Main {
                             System.out.println("NO PUEDES ENVIAR EL DINERO AL MISMO LUGAR");
                             repet = true;
                         } else {
-                            return (Cuenta)origen;
+                            return origen;
                         }
                     }
                 }
@@ -355,58 +353,60 @@ public class Main {
     }
 
     //OPCION 4
-    private static void enviarYSacarDinero() {
+    private static void SacarDinero() {
         int option;
         Cuenta destino = null;
         System.out.println("¿Desea hacer un envio o retiro?");
         System.out.println("1. Retiro");
-        System.out.println("2. Envio");
-        System.out.println("3. Volver al menu");
-        option = Validador.validarEntradaInt(3, true, 1, true);
+        System.out.println("2. Volver al menu");
+        option = Verificacion.validarEntradaInt(3, true, 1, true);
         switch (option) {
             case 2:
-                System.out.println("Seleccione a quien le desea enviar el dinero");
-                Utils.listarUsuarios();
-                destino = DataBank.getUsuarios().get(Validador.validarEntradaInt(DataBank.getUsuarios().size(), true, 1, true) - 1).getBolsillos().get(0);
-                break;
-            case 3:
                 return;
         }
-        Cuenta origen = seleccionarCuentaDeOrigen(destino);
-        if (origen != null && origen.getSaldo()>0) {
-            System.out.println("Ingrese la cantidad a transferir (en " + origen.getDivisa() + ")(entre 0 y " + String.format("%.2f",origen.getSaldo()) + ")");
-            double monto = Validador.validarEntradaDouble(origen.getSaldo(), true, 0, false);
-            Salida salida;
-            boolean retirado = false;
-            if (destino != null) {
-                double[] monto2 = origen.getDivisa().ConvertToDivisa(monto, destino.getDivisa());
-                salida = new Salida(monto2[0], monto, LocalDate.now(), origen, destino, origen.getDivisa(), destino.getDivisa());
-                retirado = usuario.nuevaSalida(salida);
+        Object origen = seleccionarCuentaDeOrigen(destino);
+
+        if (origen instanceof Categoria){
+            boolean retirado=true;
+            Categoria origen2=(Categoria) origen;
+             if (origen != null && origen2.getSaldo()>0) {
+                System.out.println("Ingrese la cantidad a retirar (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
+                double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
+                if (monto>origen2.getSaldo()){
+                    retirado = false;
+                }
                 if (retirado) {
-                    Ingreso ingreso = new Ingreso(monto2[0], monto, LocalDate.now(), origen, destino, origen.getDivisa(), destino.getDivisa());
-                    destino.getUsuario().nuevoIngreso(ingreso);
-                    System.out.println("Envio Exitoso");
-                }else {
-                	System.out.println("Envio Fallido");
-                }
-            } else {
-                System.out.println("Seleccione el Banco Al que va a retirar");
-                Utils.listarBancos();
-                int opcBanco = validarEntradaInt(Banco.values().length, true, 1, true) - 1;
-                salida = new Salida(monto, LocalDate.now(), origen, Banco.values()[opcBanco], origen.getDivisa());
-                retirado = usuario.nuevaSalida(salida);
-                if(!retirado) {
-                	System.out.println("No se realizo el retiro");
-                }else {
+                    origen2.setSaldo(origen2.getSaldo()-monto);
                     System.out.println("Retiro Exitoso");
+                    System.out.println("Nuevo saldo en " + origen2.values() + " es: " + String.format("%.2f",origen2.getSaldo()));
                 }
+                else{
+                    System.out.println("Retiro Fallido");
+                }
+
+            }else {
+        	    System.out.println("La cuenta no existe o no contiene dinero");
             }
-            if (retirado) {
-                System.out.println("Nuevo saldo en " + origen.getNombre() + " es: " + String.format("%.2f",origen.getSaldo()));
+        } 
+        if (origen instanceof Cuenta){
+            Cuenta origen2=(Cuenta) origen;
+            boolean retirado=true;
+            if (origen != null && origen2.getSaldo()>0) {
+                System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
+                double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
+                retirado = origen2.retirar((int)monto);
+                if (retirado) {
+                    System.out.println("Retiro Exitoso");
+                    System.out.println("Nuevo saldo en " + origen2.getNombre() + " es: " + String.format("%.2f",origen2.getSaldo()));
+                }
+                else{
+                    System.out.println("Retiro Fallido");
+                }
+            }else {
+                System.out.println("La cuenta no existe o no contiene dinero");
             }
-        }else {
-        	System.out.println("La cuenta no existe o no contiene dinero");
-        }
+           
+        }     
     }
 
     //OPCIÓN 5
@@ -543,7 +543,7 @@ public class Main {
     }
 
     //Menú para modificar nombre, divisa o fecha minima de retiro de un colchon
-    static void modificar(Colchon colchon) {
+    static void modificar(Ahorro colchon) {
         int opcion, divisa;
         System.out.println("¿Qué desea modificar?");
         System.out.println("1. Nombre");

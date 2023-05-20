@@ -9,6 +9,21 @@ public class Retiro extends Transaccion{
 	public Retiro(int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
 		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, Categoria.Nulo);
 	}
+
+	public Retiro (int monto, LocalDate fechaCreacion, Cuenta cuentaDestino, Categoria categoria){
+		this (monto, fechaCreacion, null, cuentaDestino, categoria);
+
+	}
+
+	public Retiro(int monto, LocalDate fechaCreacion,Cuenta cuentaDestino){
+		this (monto, fechaCreacion, null, cuentaDestino, Categoria.Nulo);
+	}
+
+	public Retiro (int monto, LocalDate fechaCreacion, Categoria categoria){
+		this (monto, fechaCreacion, null, null, categoria);
+
+	}
+
 	public Retiro (int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino, Categoria categoria) {
 		super(monto, fechaCreacion);
 		this.cuentaOrigen=cuentaOrigen;

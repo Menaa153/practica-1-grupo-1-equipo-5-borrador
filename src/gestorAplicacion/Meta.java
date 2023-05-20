@@ -95,7 +95,7 @@ public class Meta {
     
     public Transaccion abonar(int monto, Cuenta origen) {
         if (!this.cumplida) {
-            Retiro retiro = new Retiro(monto, LocalDate.now(), origen, null);
+            Retiro retiro = new Retiro(monto, LocalDate.now(), origen, (Cuenta)null);
             boolean retirado = this.usuario.nuevoRetiro(retiro);
             if(!retirado) {
             	return null;
