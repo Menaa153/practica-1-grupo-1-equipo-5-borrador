@@ -1,8 +1,14 @@
 package gestorAplicacion;
 import java.time.LocalDate;
+import java.io.Serializable;
 
 
-public abstract class Transaccion {
+public abstract class Transaccion implements Serializable{
+
+	
+	private static final long serialVersionUID = 3102227367414792060L;
+
+
 	private int monto;
 	private LocalDate fechaCreacion;
 	protected Transaccion(int monto, LocalDate fechaCreacion) {

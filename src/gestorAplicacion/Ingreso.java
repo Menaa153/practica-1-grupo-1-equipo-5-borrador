@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import gestorAplicacion.confirmacion.Alerta;
 
 public class Ingreso extends Transaccion{
+
+
+	private static final long serialVersionUID = -3919824199311137700L;
+
+
 	private Cuenta cuentaOrigen;
 	private Cuenta cuentaDestino;
 	private Categoria categoria;

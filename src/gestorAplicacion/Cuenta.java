@@ -1,6 +1,13 @@
 package gestorAplicacion;
 
-public abstract class Cuenta {
+import java.io.Serializable;
+
+public abstract class Cuenta implements Serializable{
+
+
+	private static final long serialVersionUID = -5757213716524384183L;
+
+
 	private String nombre;
 	private Usuario usuario;
 	private int saldo;

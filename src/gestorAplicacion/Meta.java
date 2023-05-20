@@ -1,8 +1,13 @@
 package gestorAplicacion;
 
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Meta {
+public class Meta implements Serializable{
+
+    
+    private static final long serialVersionUID = 659116063038663746L;
+
 	private Usuario usuario;
     private String nombre;
     private boolean cumplida;

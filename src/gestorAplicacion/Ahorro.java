@@ -2,6 +2,11 @@ package gestorAplicacion;
 import java.time.LocalDate;
 
 public class Ahorro extends Cuenta{
+
+
+	private static final long serialVersionUID = 514183129515203955L;
+
+
 	private LocalDate fechaRetiro;
 	
 	public Ahorro(Usuario usuario, String nombre, LocalDate fechaRetiro) {

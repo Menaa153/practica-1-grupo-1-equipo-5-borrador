@@ -1,17 +1,24 @@
 package gestorAplicacion;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Usuario {
+
+public class Usuario implements Serializable{
+
+
+	private static final long serialVersionUID = -64431385135968757L;
+
+
 	//atributos
 	private int cedula;
 	private String nombre;
 	private String correo;
 	
-	private ArrayList<Ahorro> ahorros = new ArrayList();
-	private ArrayList<Ingreso> ingresos = new ArrayList();
-	private ArrayList<Retiro> retiros = new ArrayList();
-	private ArrayList<Prestamo> prestamos = new ArrayList();
-	private ArrayList<Meta> metas = new ArrayList();
+	private ArrayList<Ahorro> ahorros = new ArrayList<Ahorro>();
+	private ArrayList<Ingreso> ingresos = new ArrayList<Ingreso>();
+	private ArrayList<Retiro> retiros = new ArrayList<Retiro>();
+	private ArrayList<Prestamo> prestamos = new ArrayList<Prestamo>();
+	private ArrayList<Meta> metas = new ArrayList<Meta>();
 	
 	public Usuario(int cedula, String nombre, String correo) {
 

@@ -3,7 +3,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-//import baseDatos.Serializador;
+import gestorAplicacion.confirmacion.DataBank;
+import baseDatos.Serializador;
 import gestorAplicacion.confirmacion.Listador;
 import gestorAplicacion.confirmacion.Verificacion;
 import gestorAplicacion.*;
@@ -18,7 +19,7 @@ public class Main {
 
 
     static Usuario login() {
-        return usuario;
+        return DataBank.getUsuarios();
     }
     public static void main(String[] args) throws IOException {
         App.intializeApp();
@@ -411,7 +412,7 @@ public class Main {
 
     //OPCIÓN 5
     //Se agrega un bolsillo al usuario que se seleccionó en el login() con el nombre y la divisa seleccionada por el usuario
-    static void agregarCategoira() {
+    static void agregarBolsillo() {
         int divisa;
         String nombre;
         System.out.println("Elija la divisa que desea utilizar en el bolsillo");

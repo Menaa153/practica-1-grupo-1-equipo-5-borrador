@@ -2,6 +2,11 @@ package gestorAplicacion;
 import java.time.LocalDate;
 
 public class Retiro extends Transaccion{
+
+
+	private static final long serialVersionUID = -3919824199311137700L;
+
+
 	private Cuenta cuentaOrigen;
 	private Cuenta cuentaDestino;
 	private Categoria categoria;
