@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.nio.file.Path;
 
-import gestorAplicacion.confirmacion.DataBank;
+import gestorAplicacion.confirmacion.Datos;
 
 
 public class Deserializador {
@@ -22,12 +22,12 @@ public class Deserializador {
         ObjectInputStream ois;
         assert docs != null;
         for (File file : docs) {
-            for (String[] element : DataBank.filesList) {
+            for (String[] element : Datos.filesList) {
                 if (file.getAbsolutePath().endsWith(element[0])) {
                     try {
                         fis = new FileInputStream(file);
                         ois = new ObjectInputStream(fis);
-                        DataBank.class.getMethod(element[1], Object.class).invoke(new DataBank(), ois.readObject());
+                        Datos.class.getMethod(element[1], Object.class).invoke(new Datos(), ois.readObject());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

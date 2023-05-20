@@ -8,7 +8,7 @@ import baseDatos.Deserializador;
 import gestorAplicacion.Usuario;
 
 
-public class DataBank implements Serializable {
+public class Datos implements Serializable {
 
     public static String[][] filesList = {
         // 1. name of file, 2.setterName, 3. getterName

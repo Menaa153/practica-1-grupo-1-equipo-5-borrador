@@ -1,6 +1,8 @@
 package gestorAplicacion;
 
-public enum Categoria {
+import java.io.Serializable;
+
+public enum Categoria implements Serializable{
 	Viajes(0, 0),
 	Salud(0,0),
 	Alimentacion(0,0),

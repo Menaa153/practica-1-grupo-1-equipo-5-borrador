@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.file.Path;
 
-import gestorAplicacion.confirmacion.DataBank;
+import gestorAplicacion.confirmacion.Datos;
 
 public class Serializador {
 
@@ -22,12 +22,12 @@ public class Serializador {
         ObjectOutputStream oos;
         File[] docs = rutaTemp.listFiles() != null ? rutaTemp.listFiles() : new File[0];
         for (File file : docs) {
-            for (String[] element : DataBank.filesList) {
+            for (String[] element : Datos.filesList) {
                 if (file.getAbsolutePath().endsWith(element[0])) {
                     try {
                         fos = new FileOutputStream(file);
                         oos = new ObjectOutputStream(fos);
-                        oos.writeObject(DataBank.class.getMethod(element[2]).invoke(new DataBank()));
+                        oos.writeObject(Datos.class.getMethod(element[2]).invoke(new Datos()));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -38,7 +38,7 @@ public class Serializador {
     }
 
     private static void crearArchivos() {
-        for (String[] file : DataBank.filesList) {
+        for (String[] file : Datos.filesList) {
             File f = Path.of(Serializador.rutaTemp.getAbsolutePath(), file[0]).toFile();
             if (!f.exists()) {
                 try {

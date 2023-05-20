@@ -3,7 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import gestorAplicacion.confirmacion.DataBank;
+import gestorAplicacion.confirmacion.Datos;
 import baseDatos.Serializador;
 import gestorAplicacion.confirmacion.Listador;
 import gestorAplicacion.confirmacion.Verificacion;
@@ -19,7 +19,7 @@ public class Main {
 
 
     static Usuario login() {
-        return DataBank.getUsuarios();
+        return Datos.getUsuarios();
     }
     public static void main(String[] args) throws IOException {
         App.intializeApp();
