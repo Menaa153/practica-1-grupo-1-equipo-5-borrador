@@ -1,7 +1,7 @@
 package gestorAplicacion.confirmacion;
 import gestorAplicacion.Categoria;
 
-public abstract class Alerta {
+public class Alerta {
 
     public static String Incorrecto(double opcMin, double opcMax){
         return "PORFAVOR INGRESE UN DATO VALIDO,\n" +
