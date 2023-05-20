@@ -411,7 +411,7 @@ public class Main {
 
     //OPCIÓN 5
     //Se agrega un bolsillo al usuario que se seleccionó en el login() con el nombre y la divisa seleccionada por el usuario
-    static void agregarBolsillo() {
+    static void agregarCategoira() {
         int divisa;
         String nombre;
         System.out.println("Elija la divisa que desea utilizar en el bolsillo");
@@ -426,26 +426,25 @@ public class Main {
     }
 
     //OPCIÓN6
-    //Se agrega un colchón al usuario que se seleccionó en el login() con el nombre, la divisa y la fecha de retiro seleccionada por el usuario
+    //Se agrega un ahorro al usuario que se seleccionó en el login() con el nombre y la fecha de retiro deseada
     static void agregarAhorro() {
-        int divisa, fecha;
+        int fecha;
         String nombre;
-        System.out.println("Elija la divisa que desea utilizar en el colchón");
+       /* BORRAR System.out.println("Elija la divisa que desea utilizar en el colchón");
         Utils.listarDivisas();
-        divisa = validarEntradaInt(Divisa.values().length, true, 1, true) - 1;
+        divisa = validarEntradaInt(Divisa.values().length, true, 1, true) - 1; BORRAR  */ 
 
-        System.out.println("Escriba el nombre que desea asignarle al colchón: ");
-        nombre = Validador.validarEntradaTexto(true);
+        System.out.println("Escriba el nombre que desea asignarle al ahorro: ");
+        nombre = Verificacion.validarEntradaTexto(true);
 
-        System.out.println("Elija la fecha en que desea liberar el colchón: ");
+        System.out.println("Elija la fecha en que desea retirar el ahorro ");
         for (int i = 1; i <= 12; i++) {
             System.out.println(i + ". " + LocalDate.now().plusMonths(i));
         }
         fecha = validarEntradaInt(12, true, 1, true);
-        Colchon colchon = new Colchon(usuario, Divisa.values()[divisa], nombre, LocalDate.now().plusMonths(fecha));
-        usuario.nuevoColchon(colchon);
-        System.out.println("Colchon " + nombre + " AGREGADO CON EXITO");
-
+        Ahorro ahorro = new Ahorro(usuario, nombre, LocalDate.now().plusMonths(fecha));
+        usuario.nuevoAhorro(ahorro);
+        System.out.println("Ahorro " + nombre + " AGREGADO CON EXITO");
     }
 
     //OPCION 7
