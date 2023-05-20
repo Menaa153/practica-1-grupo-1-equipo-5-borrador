@@ -1,7 +1,5 @@
 package gestorAplicacion;
 
-import gestorAplicacion.Usuario;
-
 public enum Categoria {
 	Viajes(0, 0),
 	Salud(0,0),

@@ -1,6 +1,6 @@
 package gestorAplicacion.confirmacion;
-import java.util.Scanner;
 
+import java.util.Scanner;
 
 public class Verificacion {
     private static final Scanner entrada = new Scanner(System.in);
@@ -59,3 +59,5 @@ public class Verificacion {
     }
     
 }
+
+    

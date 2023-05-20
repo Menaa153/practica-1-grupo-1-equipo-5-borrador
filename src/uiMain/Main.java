@@ -170,7 +170,7 @@ public class Main {
 
                 for(Categoria bolsillos:Categoria.values()){
                     list.add(bolsillos);
-                  } 
+                } 
                 
                 if (bool) {
                     int opc = validarEntradaInt(8, true, 1, true) - 1;
@@ -178,35 +178,60 @@ public class Main {
                     origen = seleccionarCuentaDeOrigen(destino);
 
                     if (origen instanceof Cuenta){
-                        origen=(Cuenta)origen;
-                        if (origen != null && origen.getSaldo() > 0) {
-                        System.out.println("Ingrese la cantidad a transferir (en " + origen.getDivisa() + ")(entre 0 y " + String.format("%.2f",origen.getSaldo()) + ")");
-                        double monto = Validador.validarEntradaDouble(origen.getSaldo(), true, 0, false);
-                        double[] monto2 = origen.getDivisa().ConvertToDivisa(monto, destino.getDivisa());
-                        boolean retirado = origen.retirar(monto);
-                        if (!retirado) {
-                            System.err.println("No fue posible retirar");
-                            return;
-                        }
-                        destino.depositar(monto2[0]);
-                        System.out.println("Movimiento exitosos con una trm de: " + String.format("%.2f",monto2[1]));
-                        System.out.println("Nuevo saldo en el origen de: " + String.format("%.2f",origen.getSaldo()));
-                        System.out.println("Nuevo saldo en el destino de: " + String.format("%.2f",destino.getSaldo()));
+                        Cuenta origen2=(Cuenta)origen;
+                        if (origen != null && origen2.getSaldo() > 0) {
+                            System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
+                            double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
+                            int monto2=(int)monto;
+
+                            boolean retirado = origen2.retirar(monto2);
+
+                            if (!retirado) {
+                                System.err.println("No fue posible retirar");
+                                return;
+                            }
+                            destino.setSaldo(destino.getSaldo()+monto);
+                            System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
+                            System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
                         }else {
             	        System.out.println("La cuenta no existe o no contiene dinero");
                         }
+
                     }
 
+                    if (origen instanceof Categoria){
+                        Categoria origen2=(Categoria)origen;
+                        if (origen != null && origen2.getSaldo() > 0) {
+                            System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
+                            double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
+                            int monto2=(int)monto;
 
+                            boolean retirado=true;
+                            if (monto2>origen2.getSaldo()){
+                              retirado = false;
+                            }
 
+                            if (!retirado) {
+                                System.err.println("No fue posible retirar");
+                                return;
+                            }
+                            origen2.setSaldo(origen2.getSaldo()-monto2);
+                            destino.setSaldo(destino.getSaldo()+monto);
+                            System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
+                            System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
+                        }else {
+            	        System.out.println("La cuenta no existe o no contiene dinero");
+                        }
 
-            }
+                    }
+                }
             }
 
             case 2 -> {
-                Cuenta destino, origen;
+                Cuenta destino;
+                Object origen;
                 List<Cuenta> list = new ArrayList<>();
-                System.out.println("Colchones: ");
+                System.out.println("Ahorros: ");
                 bool = Listador.listarAhorros(usuario);
                 list.addAll(usuario.getAhorros());
         
@@ -214,22 +239,55 @@ public class Main {
                     int opc = validarEntradaInt(list.size(), true, 1, true) - 1;
                     destino = list.get(opc);
                     origen = seleccionarCuentaDeOrigen(destino);
-                    if (origen != null && origen.getSaldo()>0) {
-                        System.out.println("Ingrese la cantidad a transferir (en " + origen.getDivisa() + ")(entre 0 y " + String.format("%.2f",origen.getSaldo()) + ")");
-                        double monto = Validador.validarEntradaDouble(origen.getSaldo(), true, 0, false);
-                        double[] monto2 = origen.getDivisa().ConvertToDivisa(monto, destino.getDivisa());
-                        boolean retirado = origen.retirar(monto);
-                        if (!retirado) {
-                            System.err.println("No fue posible retirar");
-                            return;
-                        }
-                        destino.depositar(monto2[0]);
-                        System.out.println("Movimiento exitosos con una trm de: " + String.format("%.2f",monto2[1]));
-                        System.out.println("Nuevo saldo en el origen de: " + String.format("%.2f",origen.getSaldo()));
-                        System.out.println("Nuevo saldo en el destino de: " + String.format("%.2f",destino.getSaldo()));
-                    }else {
+
+                    if (origen instanceof Cuenta){
+                        Cuenta origen2=(Cuenta)origen;
+                        if (origen != null && origen2.getSaldo() > 0) {
+                            System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
+                            double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
+                            int monto2=(int)monto;
+
+                            boolean retirado = origen2.retirar(monto2);
+
+                            if (!retirado) {
+                                System.err.println("No fue posible retirar");
+                                return;
+                            }
+                            destino.depositar(monto2);
+                            System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
+                            System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
+                        }else {
             	        System.out.println("La cuenta no existe o no contiene dinero");
+                        }
+
                     }
+
+                    if (origen instanceof Categoria){
+                        Categoria origen2=(Categoria)origen;
+                        if (origen != null && origen2.getSaldo() > 0) {
+                            System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
+                            double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
+                            int monto2=(int)monto;
+
+                            boolean retirado=true;
+                            if (monto2>origen2.getSaldo()){
+                              retirado = false;
+                            }
+
+                            if (!retirado) {
+                                System.err.println("No fue posible retirar");
+                                return;
+                            }
+                            origen2.setSaldo(origen2.getSaldo()-monto2);
+                            destino.depositar(monto2);
+                            System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
+                            System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
+                        }else {
+            	        System.out.println("La cuenta no existe o no contiene dinero");
+                        }
+
+                    }
+                    
                 }
             }
         }
@@ -239,7 +297,7 @@ public class Main {
         boolean repet = false;
         do {
             int option, opc;
-            Cuenta origen;
+            Object origen;
             repet = false;
             System.out.println("¿De donde sale su dinero?");
             System.out.println("1. Bolsillos");
@@ -247,29 +305,51 @@ public class Main {
             System.out.println("3. Volver al inicio");
             option = validarEntradaInt(3, true, 1, true);
             boolean bool = false;
-            List<Cuenta> list = new ArrayList<>();
+            
             switch (option) {
                 case 1 -> {
+                    origen=(Categoria) origen;
+                    List<Categoria> list = new ArrayList<>();
                     System.out.println("Bolsillos: ");
-                    bool = Utils.listarBolsillos(usuario);
-                    list.addAll(usuario.getBolsillos());
+                    bool = Listador.listarBolsillos();
+
+                    for(Categoria bolsillos:Categoria.values()){
+                        list.add(bolsillos);
+                    }
+
+                    if (bool) {
+                        opc = validarEntradaInt(8, true, 1, true) - 1;
+                        origen = list.get(opc);
+                        if (origen == destino) {
+                            System.out.println("NO PUEDES ENVIAR EL DINERO AL MISMO LUGAR");
+                             repet = true;
+                        } else {
+                            return (Categoria) origen;
+                        }
+                    }
+                    
+                
                 }
                 case 2 -> {
-                    System.out.println("Colchones: ");
-                    bool = Utils.listarColchones(usuario);
-                    list.addAll(usuario.getColchones());
+                    origen=(Cuenta)origen;
+                    List<Cuenta> list = new ArrayList<>();
+                    System.out.println("Ahorros: ");
+                    bool = Listador.listarAhorros(usuario);
+                    list.addAll(usuario.getAhorros());
+
+                    if (bool) {
+                        opc = validarEntradaInt(list.size(), true, 1, true) - 1;
+                        origen = list.get(opc);
+                        if (origen == destino) {
+                            System.out.println("NO PUEDES ENVIAR EL DINERO AL MISMO LUGAR");
+                            repet = true;
+                        } else {
+                            return (Cuenta)origen;
+                        }
+                    }
                 }
             }
-            if (bool) {
-                opc = validarEntradaInt(list.size(), true, 1, true) - 1;
-                origen = list.get(opc);
-                if (origen == destino) {
-                    System.out.println("NO PUEDES ENVIAR EL DINERO AL MISMO LUGAR");
-                    repet = true;
-                } else {
-                    return origen;
-                }
-            }
+            
         } while (repet);
         return null;
     }

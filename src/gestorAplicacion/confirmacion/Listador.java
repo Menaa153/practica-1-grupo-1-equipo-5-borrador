@@ -12,6 +12,7 @@ import gestorAplicacion.Usuario;
 import gestorAplicacion.Categoria;
 
 public class Listador {
+
     //Se listan las garantias del sistema
     //public static void listarGarantias() {
     //    int j = 1;
@@ -106,3 +107,5 @@ public class Listador {
         return Math.abs(MONTHS.between(inicio, fin));
     }
 }
+
+    

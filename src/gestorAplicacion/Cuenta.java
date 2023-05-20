@@ -1,5 +1,4 @@
 package gestorAplicacion;
-import java.util.ArrayList;
 
 public abstract class Cuenta {
 	private String nombre;

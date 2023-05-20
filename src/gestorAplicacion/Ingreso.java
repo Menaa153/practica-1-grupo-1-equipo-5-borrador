@@ -1,5 +1,4 @@
 package gestorAplicacion;
-import java.util.ArrayList;
 import java.time.LocalDate;
 
 import gestorAplicacion.confirmacion.Alerta;
