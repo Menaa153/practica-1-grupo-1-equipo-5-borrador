@@ -1,6 +1,10 @@
 package gestorAplicacion;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.Serializable;
+
+import static gestorAplicacion.confirmacion.Listador.listarBolsillos;
+import static gestorAplicacion.confirmacion.Verificacion.validarEntradaInt;
 
 
 public class Usuario implements Serializable{
@@ -124,22 +128,11 @@ public class Usuario implements Serializable{
 
 	}
 
-//	public void nuevoPrestamo(PrestamoLargoPlazo prestamo, Bolsillo bolsillo) {
-
-		//prestamos.add(prestamo);
-
-		//bolsillo.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
-
-	
-	//
-//sobrecarga de método nuevoprestamo
-	//public void nuevoPrestamo(PrestamoFugaz prestamo, Ahorro ahorro) {
-
-		//prestamos.add(prestamo);
-
-		//ahorro.depositar(prestamo.getDivisa().ConvertToDivisa(prestamo.getValorInicial(), bolsillo.getDivisa())[0]);
-
-//}
+	public void aprobarAgregarPrestamo(double montoPrestado) {
+		Prestamo prestamo = new Prestamo(montoPrestado, 0);
+		prestamos.add(prestamo);
+		System.out.println("PRESTAMO AGREGADO CORRECTAMENTE");
+	}
 
 	//Se realiza una separacion del dinero del usuario por divisas guardada en bolsillos, colchones y metas
 

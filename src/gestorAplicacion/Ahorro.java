@@ -28,7 +28,4 @@ public class Ahorro extends Cuenta{
 	public void setFechaRetiro(LocalDate fechaRetiro) {
 		this.fechaRetiro = fechaRetiro;
 	}
-
-	
-
 }

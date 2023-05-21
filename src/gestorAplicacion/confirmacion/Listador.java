@@ -25,7 +25,7 @@ public class Listador {
     //}
     
     //Se listan los bolsillos del usuario que pasa como referencia
-    public static boolean listarBolsillos() {
+    public static boolean listarBolsillos(Usuario usuario) {
         int j = 1;
     	System.out.println("--------------------------------------------------------------------------");
         for (Categoria i : Categoria.values()) {

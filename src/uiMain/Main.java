@@ -10,6 +10,7 @@ import gestorAplicacion.confirmacion.Verificacion;
 import gestorAplicacion.*;
 
 
+import static gestorAplicacion.confirmacion.Listador.listarBolsillos;
 import static gestorAplicacion.confirmacion.Verificacion.*;
 
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class Main {
                 case 6 -> agregarAhorro();
                 case 7 -> agregarMeta();
                 case 8 -> opcionModificar();
-                case 9 -> solicitarPrestamo();
+                case 9 -> solicitarPrestamo(usuario);
                 case 10 -> abonarPrestamoOMeta();
                 case 11 -> {
                    return;
@@ -83,7 +84,7 @@ public class Main {
         option = validarEntradaInt(5, true, 0, false);
 
         switch (option) {
-            case 1 -> Listador.listarBolsillos();
+            case 1 -> listarBolsillos(usuario);
             case 2 -> Listador.listarAhorros(usuario);
             case 3 -> Listador.listarMetas(usuario);
             case 4 -> {
@@ -111,7 +112,7 @@ public class Main {
             case 1 -> {
                 List<Categoria> list=new ArrayList<>();
                 System.out.println("Bolsillo: ");
-                bool = Listador.listarBolsillos();
+                bool = listarBolsillos(usuario);
 
                 for(Categoria bolsillos:Categoria.values()){
                   list.add(bolsillos);
@@ -167,7 +168,7 @@ public class Main {
                 Object origen;
                 List<Categoria> list = new ArrayList<>();
                 System.out.println("Bolsillos: ");
-                bool = Listador.listarBolsillos();
+                bool = listarBolsillos(usuario);
 
                 for(Categoria bolsillos:Categoria.values()){
                     list.add(bolsillos);
@@ -311,7 +312,7 @@ public class Main {
                 case 1 -> {
                     List<Categoria> list = new ArrayList<>();
                     System.out.println("Bolsillos: ");
-                    bool = Listador.listarBolsillos();
+                    bool = listarBolsillos(usuario);
 
                     for(Categoria bolsillos:Categoria.values()){
                         list.add(bolsillos);
@@ -481,7 +482,7 @@ public class Main {
         switch (opcion) {
             case 1 -> {
                 System.out.println("Bolsillos: ");
-                bool = Utils.listarBolsillos(usuario);
+                bool = listarBolsillos(usuario);
                 list.addAll(usuario.getBolsillos());
             }
             case 2 -> {
@@ -657,7 +658,7 @@ public class Main {
                 if (bol[1]) {
                     System.out.println("FELICIDADES HAS CUMPLIDO TU META " + meta.getNombre().toUpperCase());
                     System.out.println("Escoge un Bolsillo al cual enviar el dinero para que lo puedas usar (" + String.format("%.2f",meta.getSaldo()) + " " + meta.getDivisa() + "): ");
-                    Utils.listarBolsillos(usuario);
+                    listarBolsillos(usuario);
                     int option = Validador.validarEntradaInt(usuario.getBolsillos().size(), true, 1, true) - 1;
                     Bolsillo bolsillo = usuario.getBolsillos().get(option);
                     Movimiento movimiento = meta.terminar(bolsillo);
@@ -675,27 +676,21 @@ public class Main {
 
     //OPCIÓN 9
     //Menú para que el usuario seleccione que prestamo desea
-    static void solicitarPrestamo() {
-        System.out.println("Seleccione la divisa con la que solicitara el prestamo");
-        Utils.listarDivisas();
-        int divisa = Validador.validarEntradaInt(Divisa.values().length, true, 1, true) - 1;
-        int opcion;
-        System.out.println("¿Qué tipo de prestamo desea solicitar?");
-        System.out.println("1. Prestamo fugaz");
-        System.out.println("2. Prestamo a largo plazo");
-        System.out.println("3. Volver al inicio");
-        opcion = validarEntradaInt(3, true, 1, true);
+    static void solicitarPrestamo(Usuario usuario) {
+        System.out.println("Digite su ingreso mensual utilice ',' para el símbolo decimal: ");
+        double ingresoMensual = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
+        double posibleCantidadPrestamo = Estadistica.calcularPosibleCantidadPrestamo(usuario, ingresoMensual);
 
-        switch (opcion) {
-            case 1:
-                peticionPrestamoF(Divisa.values()[divisa]);
-                break;
-            case 2:
-                peticionPrestamoLP(Divisa.values()[divisa]);
-                break;
-            case 3:
-                break;
+        System.out.println("¿Cuánto dinero gasta en vivienda? (utilice ',' para el símbolo decimal): ");
+        double gastoVivienda = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
+        double[] infoCuotas = Prestamo.calcularCuotas(posibleCantidadPrestamo, ingresoMensual, gastoVivienda);
+        if (infoCuotas[0] == 0) {
+            System.out.println("Lo sentimos no eres apto para el prestamo");
+            System.out.println("PRESTAMO RECHAZADO/CANCELADO");
+            return;
         }
+        
+        usuario.aprobarAgregarPrestamo(infoCuotas[1]);
     }
 
     //Se inicia la peticion del prestamo a largo plazo con algunos datos basicos para validar si es apto
@@ -750,17 +745,7 @@ public class Main {
             Utils.listarGarantias();
             opcGarantia = Validador.validarEntradaInt(Garantia.values().length, true, 1, true) - 1;
         }
-        System.out.println("Escoja el bolsillo al que se le enviará el dinero");
-        Utils.listarBolsillos(usuario);
-        int bolsillo = Validador.validarEntradaInt(usuario.getBolsillos().size(), true, 1, true) - 1;
-        PrestamoLargoPlazo prestamo;
-        if (opcGarantia < 0) {
-			prestamo = new PrestamoLargoPlazo(usuario, dineroSolicitado, tiempo, LocalDate.now(), divisa, referencia);
-        } else {
-            prestamo = new PrestamoLargoPlazo(usuario, dineroSolicitado, tiempo, LocalDate.now(), divisa, referencia, Garantia.values()[opcGarantia]);
-        }
-        usuario.nuevoPrestamo(prestamo, usuario.getBolsillos().get(bolsillo));
-        System.out.println("PRESTAMO APROBADO...");
+
 
     }
 
@@ -792,7 +777,7 @@ public class Main {
             }
             if (montoPrestamo != 0) {
                 System.out.println("Escoja el bolsillo al que se le enviara el dinero");
-                Utils.listarBolsillos(usuario);
+                listarBolsillos(usuario);
                 int bolsillo = Validador.validarEntradaInt(usuario.getBolsillos().size(), true, 1, true) - 1;
                 PrestamoFugaz prestamo = new PrestamoFugaz(usuario, montoPrestamo, LocalDate.now(), divisa);
                 usuario.nuevoPrestamo(prestamo, usuario.getBolsillos().get(bolsillo));
@@ -831,7 +816,7 @@ public class Main {
                 return;
         }
         System.out.println("Seleccione el Bolsillo desde el que va a abonar");
-        Utils.listarBolsillos(usuario);
+        listarBolsillos(usuario);
         Bolsillo bolsillo = usuario.getBolsillos().get(Validador.validarEntradaInt(usuario.getBolsillos().size(), true, 1, true) - 1);
         if(bolsillo.getSaldo()>0) {
         	System.out.println("Ingrese la cantidad que va a abonar (entre 0 y " + String.format("%.2f",bolsillo.getSaldo()) + " " + bolsillo.getDivisa() + "):");
@@ -847,7 +832,7 @@ public class Main {
                     if (bol2) {
                         System.out.println("FELICIDADES HAS CUMPLIDO TU META " + meta.getNombre().toUpperCase());
                         System.out.println("Escoge un Bolsillo al cual enviar el dinero para que lo puedas usar (" + String.format("%.2f",meta.getSaldo()) + " " + meta.getDivisa() + "): ");
-                        Utils.listarBolsillos(usuario);
+                        listarBolsillos(usuario);
                         int opt = Validador.validarEntradaInt(usuario.getBolsillos().size(), true, 1, true) - 1;
                         Bolsillo bolsilloDes = usuario.getBolsillos().get(opt);
                         Movimiento movimientoDes = meta.terminar(bolsilloDes);

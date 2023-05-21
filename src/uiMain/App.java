@@ -20,10 +20,13 @@ public class App {
             switch (input) {
                 case 1:
                     prestamo();
+                    break;
             }
         }
     }
 
     private static void prestamo() {
+
     }
+
 }
