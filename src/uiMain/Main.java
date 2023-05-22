@@ -410,23 +410,7 @@ public class Main {
            
         }     
     }
-
-    //OPCIÓN 5
-    //Se agrega un bolsillo al usuario que se seleccionó en el login() con el nombre y la divisa seleccionada por el usuario
-    static void agregarBolsillo() {
-        int divisa;
-        String nombre;
-        System.out.println("Elija la divisa que desea utilizar en el bolsillo");
-        Utils.listarDivisas();
-        divisa = validarEntradaInt(Divisa.values().length, true, 0, false) - 1;
-
-        System.out.println("Escriba el nombre que desea asignarle al bolsillo: ");
-        nombre = Validador.validarEntradaTexto(false);
-        Bolsillo bolsillo = new Bolsillo(usuario, Divisa.values()[divisa], nombre);
-        usuario.nuevoBolsillo(bolsillo);
-        System.out.println("Bolsillo " + nombre + " AGREGADO CON EXITO");
-    }
-
+    
     //OPCIÓN6
     //Se agrega un ahorro al usuario que se seleccionó en el login() con el nombre y la fecha de retiro deseada
     static void agregarAhorro() {
