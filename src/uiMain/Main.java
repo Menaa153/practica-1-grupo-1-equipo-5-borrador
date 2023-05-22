@@ -40,31 +40,29 @@ public class Main {
             System.out.println("2. Ingresar dinero a su cuenta");
             System.out.println("3. Mover dinero en su cuenta");
             System.out.println("4. Sacar dinero de su cuenta");
-            System.out.println("5. Agregar bolsillo a su cuenta");
-            System.out.println("6. Agregar Ahorro a su cuenta");
-            System.out.println("7. Agregar Meta a su cuenta");
-            System.out.println("8. Modificar Ahorro/Bolsillo/Meta");
-            System.out.println("9. Solicitar Préstamo");
-            System.out.println("10. Abonar a un préstamo o Meta");
-            System.out.println("11. Logout");
-            System.out.println("12. Terminar ");
-            option = validarEntradaInt(12, true, 0, false);
+            System.out.println("5. Agregar Ahorro a su cuenta");
+            System.out.println("6. Agregar Meta a su cuenta");
+            System.out.println("7. Modificar Ahorro/Bolsillo/Meta");
+            System.out.println("8. Solicitar Préstamo");
+            System.out.println("9. Abonar a un préstamo o Meta");
+            System.out.println("10. Logout");
+            System.out.println("11. Terminar ");
+            option = validarEntradaInt(11, true, 0, false);
 
             switch (option) {
                 case 1 -> saldosDisponibles();
                 case 2 -> ingresaDinero();
                 case 3 -> moverDineroInterno();
                 case 4 -> SacarDinero();
-                case 5 -> agregarBolsillo();
-                case 6 -> agregarAhorro();
-                case 7 -> agregarMeta();
-                case 8 -> opcionModificar();
-                case 9 -> solicitarPrestamo(usuario);
-                case 10 -> abonarPrestamoOMeta();
-                case 11 -> {
+                case 5 -> agregarAhorro();
+                case 6 -> agregarMeta();
+                case 7 -> opcionModificar();
+                case 8 -> solicitarPrestamo(usuario);
+                case 9 -> abonarPrestamoOMeta();
+                case 10 -> {
                    return;
                 }
-                //case 12 -> Serializador.serializar();
+                case 11 -> Serializador.serializar();
                 default -> System.out.println("OPCIÓN EN DESARROLLO");
             }
         } while (option != 12);
@@ -411,7 +409,7 @@ public class Main {
         }     
     }
     
-    //OPCIÓN6
+    //OPCIÓN5
     //Se agrega un ahorro al usuario que se seleccionó en el login() con el nombre y la fecha de retiro deseada
     static void agregarAhorro() {
         int fecha;
@@ -433,7 +431,7 @@ public class Main {
         System.out.println("Ahorro " + nombre + " AGREGADO CON EXITO");
     }
 
-    //OPCION 7
+    //OPCION 6
     private static void agregarMeta() {
         int divisa;
         String nombre;
@@ -451,7 +449,7 @@ public class Main {
         System.out.println("Meta Agregada Con Exito");
     }
 
-    //OPCION 8
+    //OPCION 7
     //Menú para la eleccion de modificacion, sea bolsillo o colchón, luego se envia la eleccion a la funcion modificar
     static void opcionModificar() {
         int opcion, opc;
@@ -658,7 +656,7 @@ public class Main {
         System.out.println("MODIFICACION REALIZADA CON EXITO");
     }
 
-    //OPCIÓN 9
+    //OPCIÓN 8
     //Menú para que el usuario seleccione que prestamo desea
     static void solicitarPrestamo(Usuario usuario) {
         System.out.println("Digite su ingreso mensual utilice ',' para el símbolo decimal: ");
@@ -774,7 +772,7 @@ public class Main {
         }
     }
 
-    //OPCION 10
+    //OPCION 9
     private static void abonarPrestamoOMeta() {
         System.out.println("¿A que desea abonar?");
         System.out.println("1. Prestamos");
