@@ -378,7 +378,7 @@ public class Main {
                 if (retirado) {
                     origen2.setSaldo(origen2.getSaldo()-monto);
                     System.out.println("Retiro Exitoso");
-                    System.out.println("Nuevo saldo en " + origen2.values() + " es: " + String.format("%.2f",origen2.getSaldo()));
+                    System.out.println("Nuevo saldo en " + origen2.name() + " es: " + String.format("%.2f",origen2.getSaldo()));
                 }
                 else{
                     System.out.println("Retiro Fallido");
@@ -414,9 +414,6 @@ public class Main {
     static void agregarAhorro() {
         int fecha;
         String nombre;
-       /* BORRAR System.out.println("Elija la divisa que desea utilizar en el colchón");
-        Utils.listarDivisas();
-        divisa = validarEntradaInt(Divisa.values().length, true, 1, true) - 1; BORRAR  */ 
 
         System.out.println("Escriba el nombre que desea asignarle al ahorro: ");
         nombre = Verificacion.validarEntradaTexto(true);
@@ -436,15 +433,12 @@ public class Main {
         int divisa;
         String nombre;
         double objetivo;
-        System.out.println("Elija la divisa que desea utilizar la meta: ");
-        Utils.listarDivisas();
-        divisa = validarEntradaInt(Divisa.values().length, true, 1, true) - 1;
 
         System.out.println("Escriba el nombre que desea asignarle a la meta: ");
-        nombre = Validador.validarEntradaTexto(true);
+        nombre = Verificacion.validarEntradaTexto(true);
         System.out.println("Ingrese el valor objetivo que desea asignarle a la meta (recuerde que no podra sacar el dinero de una meta hasta alcanzar el objetivo): ");
         objetivo = validarEntradaDouble(Double.MAX_VALUE, true, 0, true);
-        Meta meta = new Meta(usuario, nombre, LocalDate.now(), objetivo, Divisa.values()[divisa]);
+        Meta meta = new Meta(usuario, nombre, LocalDate.now(), objetivo);
         usuario.nuevaMeta(meta);
         System.out.println("Meta Agregada Con Exito");
     }

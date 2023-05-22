@@ -37,11 +37,4 @@ public enum Categoria implements Serializable{
         this.presupuesto = presupuesto;
 	}
 
-
-	//for (Categoria categoria: Categoria.values()){
-	//	Usuario.setBolsillos(Usuario.getBolsillos().add(categoria))
-
-	//}
-
-
 }
