@@ -3,9 +3,9 @@ package gestorAplicacion;
 import java.time.LocalDate;
 import java.io.Serializable;
 
-public class Meta implements Serializable{
+public class Meta implements Serializable, Abonable<Transaccion>{
 
-    
+
     private static final long serialVersionUID = 659116063038663746L;
 
 	private Usuario usuario;
@@ -97,10 +97,25 @@ public class Meta implements Serializable{
         this.fechaInicio = fechaInicio;
     }
 
-    
-    public Transaccion abonar(int monto, Cuenta origen) {
+    @Override
+    public Transaccion abonar(double monto, Categoria origen){
         if (!this.cumplida) {
-            Retiro retiro = new Retiro(monto, LocalDate.now(), origen, (Cuenta)null);
+            Retiro retiro = new Retiro((int)monto, LocalDate.now(), origen);
+            boolean retirado = this.usuario.nuevoRetiro(retiro);
+            if(!retirado) {
+            	return null;
+            }
+            this.saldo += monto;
+            return retiro;
+        }
+        return null;
+
+    }
+
+    @Override
+    public Transaccion abonar(double monto, Cuenta origen) {
+        if (!this.cumplida) {
+            Retiro retiro = new Retiro((int)monto, LocalDate.now(), origen, (Cuenta)null);
             boolean retirado = this.usuario.nuevoRetiro(retiro);
             if(!retirado) {
             	return null;
@@ -111,7 +126,7 @@ public class Meta implements Serializable{
         return null;
     }
 
-	
+	@Override
 	public Transaccion terminar(Cuenta cuenta) {
 		int nuevoSaldo = this.saldo;
         this.saldo = 0;
@@ -121,4 +136,16 @@ public class Meta implements Serializable{
         usuario.nuevoIngreso(ingreso);
 		return ingreso;
 	}
+
+    @Override
+    public Transaccion terminar(Categoria categoria){
+        int nuevoSaldo = this.saldo;
+        this.saldo = 0;
+        this.cumplida = true;
+        this.fechaCumplimiento = LocalDate.now();
+        Ingreso ingreso = new Ingreso(nuevoSaldo, LocalDate.now(), categoria);
+        usuario.nuevoIngreso(ingreso);
+		return ingreso;
+
+    }
 }

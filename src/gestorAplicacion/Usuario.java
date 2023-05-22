@@ -1,5 +1,4 @@
 package gestorAplicacion;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.io.Serializable;
 
@@ -106,14 +105,27 @@ public class Usuario implements Serializable{
 
 	public boolean nuevoRetiro(Retiro retiro) {
 
-		boolean salida = retiro.getCuentaOrigen().retirar(retiro.getMonto());
+        if(retiro.getCuentaOrigen()!=null){
+		    boolean salida = retiro.getCuentaOrigen().retirar(retiro.getMonto());
 
-		if(salida){
+		    if(salida){
 
-			retiros.add(retiro);
+			    retiros.add(retiro);
 
-	}
-		return salida;}
+	        }
+		    return salida;
+	    }
+		else{
+			if (retiro.getCategoria().getSaldo()<=retiro.getMonto()){
+				retiro.getCategoria().setSaldo(retiro.getCategoria().getSaldo()-retiro.getMonto());
+				return true;
+
+			}
+			else{
+				return false;
+			}
+		}
+    }
 
 
 	public void nuevoAhorro(Ahorro ahorro) {
