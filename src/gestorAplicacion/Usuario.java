@@ -156,10 +156,10 @@ public class Usuario implements Serializable{
 
 		return total;
 	}
-		
 
 
-	
-	
-
+	public void nuevoPrestamo(Prestamo prestamo, Categoria bolsillo) {
+		prestamos.add(prestamo);
+		bolsillo.setSaldo(bolsillo.getSaldo() + prestamo.getMontoPrestado());
+	}
 }

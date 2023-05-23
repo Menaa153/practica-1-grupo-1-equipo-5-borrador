@@ -681,7 +681,7 @@ public class Main {
         int opt = validarEntradaInt(2, true, 1, true);
         switch (opt) {
             case 1:
-                AceptadoPrestamo(posibleCantidadPrestamo, (int) infoCuotas[0]);
+                AceptadoPrestamo(posibleCantidadPrestamo, (int) infoCuotas[0], opcGarantia);
                 break;
             case 2:
                 System.out.println("PRESTAMO CANCELADO");
@@ -690,7 +690,7 @@ public class Main {
     }
 
     //Si el usuario es apto para un prestado a largo plazo se le solicitan unos datos para guardar como garantía, se genera el préstamo y se agrega a los préstamos realizados por el usuario
-    static void AceptadoPrestamo(double dineroSolicitado, int periodos) {
+    static void AceptadoPrestamo(double dineroSolicitado, int periodos, int opcGarantia) {
         String[] referencia = new String[2];
 
         System.out.println("Escriba el nombre de una referencia: ");
@@ -701,15 +701,22 @@ public class Main {
 
         System.out.println("Escoja el bolsillo al que se le enviará el dinero");
         listarBolsillos(usuario);
-        // TODO: Check what is getBolsillos
-        int bolsillo = validarEntradaInt(usuario.getAhorros().size(), true, 1, true) - 1;
+        
+        int bolsilloSeleccionado = validarEntradaInt(usuario.getAhorros().size(), true, 1, true) - 1;
+
+        List<Categoria> list = new ArrayList<>();
+        for (Categoria bolsillos : Categoria.values()) {
+            list.add(bolsillos);
+        }
+
+        Categoria bolsillo = list.get(bolsilloSeleccionado);
         Prestamo prestamo;
         if (opcGarantia < 0) {
             prestamo = new Prestamo(usuario, dineroSolicitado, periodos, referencia);
         } else {
             prestamo = new Prestamo(usuario, dineroSolicitado, periodos, referencia, Garantia.values()[opcGarantia]);
         }
-        usuario.nuevoPrestamo(prestamo, usuario.getBolsillos().get(bolsillo));
+        usuario.nuevoPrestamo(prestamo, bolsillo);
         System.out.println("PRESTAMO APROBADO...");
 
     }
@@ -773,13 +780,10 @@ public class Main {
                             System.out.println("Restante para cumplir la meta de: " + String.format("%.2f", meta.getObjetivo() - meta.getSaldo()));
                         }
                     } else if (abonable instanceof Prestamo prestamo && resp instanceof double[] dou) {
-                        System.out.println("Intereses pagados de: " + String.format("%.2f", dou[0]) + " ");
-                        System.out.println("Abono a Capital de: " + String.format("%.2f", dou[1]) + " ");
-                        if (prestamo.getTotalPagado() < prestamo.getMontoPrestado()) {
-                            System.out.println("Te queda por pagar: " + String.format("%.2f", (prestamo.getMontoPrestado() - prestamo.getTotalPagado())));
-                            System.out.println("Para poder dar cumplimiento a la fecha del cobro");
-                        } else {
+                        if (prestamo.isPagado()) {
                             System.out.println("FELICIDADES PAGASTE TU PRESTAMO");
+                        } else {
+                            System.out.println("Te queda por pagar: " + String.format("%.2f", (prestamo.getMontoPrestado() - prestamo.getTotalPagado())));
                         }
                     }
                 } else {

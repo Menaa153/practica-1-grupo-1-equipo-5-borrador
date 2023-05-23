@@ -6,8 +6,8 @@ import static java.time.temporal.ChronoUnit.MONTHS;
 
 public class Prestamo implements Abonable{
     static double tasa = 0.18;
-    double montoPrestado;
-    double totalPagado;
+    private double montoPrestado;
+    private double totalPagado;
     boolean pagado;
     private final LocalDate fechaInicio;
     private final LocalDate fechaFinal;
@@ -107,17 +107,32 @@ public class Prestamo implements Abonable{
         return totalPagado;
     }
 
-    public void setTotalPagado(double totalPagado) {
-        this.totalPagado = totalPagado;
-    }
-
     @Override
     public Object abonar(double monto, Cuenta origen) {
+        if (origen.retirar((int)monto)) {
+            this.totalPagado+=monto;
+            if (this.totalPagado >= this.getMontoPrestado()) {
+                this.pagado = true;
+                System.out.println("Felicidades pagaste tu prestamo");
+                return true;
+            }
+        }
+        System.out.println("No puedes abonar, saldo insuficiente");
         return null;
     }
 
     @Override
     public Object abonar(double monto, Categoria origen) {
+        if (origen.getSaldo() >= monto) {
+            origen.setSaldo(origen.getSaldo() - monto);
+            this.totalPagado+=monto;
+            if (this.totalPagado >= this.getMontoPrestado()) {
+                this.pagado = true;
+                System.out.println("Felicidades pagaste tu prestamo");
+                return true;
+            }
+        }
+        System.out.println("No puedes abonar, saldo insuficiente");
         return null;
     }
 
