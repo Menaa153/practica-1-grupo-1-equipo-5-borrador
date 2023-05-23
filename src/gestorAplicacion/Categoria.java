@@ -36,5 +36,4 @@ public enum Categoria implements Serializable{
 	public void setPresupuesto(double presupuesto) {
         this.presupuesto = presupuesto;
 	}
-
 }

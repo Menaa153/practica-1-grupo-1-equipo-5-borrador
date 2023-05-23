@@ -2,9 +2,6 @@ package gestorAplicacion;
 import java.util.ArrayList;
 import java.io.Serializable;
 
-import static gestorAplicacion.confirmacion.Listador.listarBolsillos;
-import static gestorAplicacion.confirmacion.Verificacion.validarEntradaInt;
-
 
 public class Usuario implements Serializable{
 
@@ -92,13 +89,10 @@ public class Usuario implements Serializable{
 	//métodos
 
 	public void nuevoIngreso(Ingreso ingreso) {
-
 		if (ingreso.getCuentaDestino()!=null){
 		ingreso.getCuentaDestino().depositar(ingreso.getMonto());
 		ingresos.add(ingreso);
 		}
-	
-
 	}
 
 	//Se realiza un retiro validando su consistencia origen del usuario y se genera una salida en el historial
@@ -138,12 +132,6 @@ public class Usuario implements Serializable{
 
 		metas.add(meta);
 
-	}
-
-	public void aprobarAgregarPrestamo(double montoPrestado) {
-		Prestamo prestamo = new Prestamo(montoPrestado, 0);
-		prestamos.add(prestamo);
-		System.out.println("PRESTAMO AGREGADO CORRECTAMENTE");
 	}
 
 	//Se realiza una separacion del dinero del usuario por divisas guardada en bolsillos, colchones y metas
