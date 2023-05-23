@@ -411,21 +411,27 @@ public class Main {
     //OPCIÓN 5
     //Se agrega un bolsillo al usuario que se seleccionó en el login() con el nombre y la divisa seleccionada por el usuario
     static void agregarBolsillo() {
-        int divisa;
-        String nombre;
-        System.out.println("Elija la divisa que desea utilizar en el bolsillo");
-        listarDivisas();
-        divisa = validarEntradaInt(Divisa.values().length, true, 0, false) - 1;
+        int opcion;
+        List<Categoria> list = new ArrayList<>();
 
-        System.out.println("Escriba el nombre que desea asignarle al bolsillo: ");
-        nombre = Validador.validarEntradaTexto(false);
-        Bolsillo bolsillo = new Bolsillo(usuario, Divisa.values()[divisa], nombre);
-        usuario.nuevoBolsillo(bolsillo);
-        System.out.println("Bolsillo " + nombre + " AGREGADO CON EXITO");
+        System.out.println("Escoja que bolsillo quiere agregar a su cuenta: ");
+
+        int j = 1;
+        for (Categoria i : Categoria.values()) {
+            if (j<9){
+                System.out.println(j + ". " + i);
+                j++;
+            } else { break; }}
+
+        //Listador.listarBolsillos(usuario);
+        opcion = validarEntradaInt(Categoria.values().length, true, 0, false) - 1;
+        list.add(Categoria.values()[opcion]);
+        usuario.nuevaCategoria(list);
+        System.out.println("Bolsillo " + Categoria.values()[opcion] + " AGREGADO CON EXITO");
     }
 
     //OPCIÓN6
-    //Se agrega un ahorro al usuario que se seleccionó en el login() con el nombre y la fecha de retiro deseada
+    //Se agrega un colchón al usuario que se seleccionó en el login() con el nombre, la divisa y la fecha de retiro seleccionada por el usuario
     static void agregarAhorro() {
         int fecha;
         String nombre;
@@ -433,24 +439,24 @@ public class Main {
         System.out.println("Escriba el nombre que desea asignarle al ahorro: ");
         nombre = Verificacion.validarEntradaTexto(true);
 
-        System.out.println("Elija la fecha en que desea retirar el ahorro ");
+        System.out.println("Elija la fecha en que desea liberar el ahorro: ");
         for (int i = 1; i <= 12; i++) {
             System.out.println(i + ". " + LocalDate.now().plusMonths(i));
         }
         fecha = validarEntradaInt(12, true, 1, true);
         Ahorro ahorro = new Ahorro(usuario, nombre, LocalDate.now().plusMonths(fecha));
         usuario.nuevoAhorro(ahorro);
-        System.out.println("Ahorro " + nombre + " AGREGADO CON EXITO");
+        System.out.println("ahorro " + nombre + " AGREGADO CON EXITO");
     }
 
-    //OPCION 6
+
+    //OPCION 7
     private static void agregarMeta() {
-        int divisa;
         String nombre;
         double objetivo;
 
         System.out.println("Escriba el nombre que desea asignarle a la meta: ");
-        nombre = validarEntradaTexto(true);
+        nombre = Verificacion.validarEntradaTexto(true);
         System.out.println("Ingrese el valor objetivo que desea asignarle a la meta (recuerde que no podra sacar el dinero de una meta hasta alcanzar el objetivo): ");
         objetivo = validarEntradaDouble(Double.MAX_VALUE, true, 0, true);
         Meta meta = new Meta(usuario, nombre, LocalDate.now(), objetivo);
@@ -458,33 +464,48 @@ public class Main {
         System.out.println("Meta Agregada Con Exito");
     }
 
-    //OPCION 7
-    //Menú para la eleccion de modificacion, sea bolsillo o colchón, luego se envia la eleccion a la funcion modificar
+    //OPCION 8
+    //Menú para la eleccion de modificacion, sea bolsillo, colchón o meta, luego se envia la eleccion a la funcion modificar
     static void opcionModificar() {
         int opcion, opc;
         System.out.println("¿Qué desea modificar?");
         System.out.println("1. Bolsillo");
-        System.out.println("2. Colchon");
+        System.out.println("2. Ahorro");
         System.out.println("3. Meta");
         System.out.println("4. Volver al inicio");
         opcion = validarEntradaInt(4, true, 1, true);
         boolean bool = false;
-        List<Contable> list = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
         switch (opcion) {
             case 1 -> {
                 System.out.println("Bolsillos: ");
-                bool = listarBolsillos(usuario);
-                list.addAll(usuario.getBolsillos());
+                bool = Listador.listarBolsillos(usuario);
+                if (bool) {
+                    int j = usuario.getCategoria().size();
+                    int a=1;
+                    for (Categoria i : usuario.getCategoria()) {
+                        if (a<=j){
+                            list.add(i);
+                            a++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
             }
             case 2 -> {
-                System.out.println("Colchones: ");
-                bool = Utils.listarColchones(usuario);
-                list.addAll(usuario.getColchones());
+                System.out.println("Ahorros: ");
+                bool = Listador.listarAhorros(usuario);
+                if (bool) {
+                    list.addAll(usuario.getAhorros());
+                }
             }
             case 3 -> {
                 System.out.println("Metas: ");
-                bool = Utils.listarMetas(usuario);
-                list.addAll(usuario.getMetas());
+                bool = Listador.listarMetas(usuario);
+                if (bool) {
+                    list.addAll(usuario.getMetas());
+                }
             }
         }
         if (bool) {
@@ -493,40 +514,36 @@ public class Main {
         }
     }
 
-    static void modificar(Contable x) {
-        if (x instanceof Bolsillo then) {
+    //Condicional para ver que opción se va a modificar segun el usuario
+    static void modificar(Object x) {
+        if (x instanceof Categoria then) {
             modificar(then);
-        } else if (x instanceof Colchon then) {
+        } else if (x instanceof Ahorro then) {
             modificar(then);
         } else if (x instanceof Meta then) {
             modificar(then);
         }
     }
 
-    //Menú para modificar nombre o divisa de un bolsillo
-    static void modificar(Bolsillo bolsillo) {
-        int opcion, divisa;
+    //Menú para modificar saldo o presupuesto de un bolsillo
+    static void modificar(Categoria bolsillo) {
+        int opcion;
         System.out.println("¿Qué desea modificar?");
-        System.out.println("1. Nombre");
-        System.out.println("2. Divisa");
+        System.out.println("1. Saldo");
+        System.out.println("2. Presupuesto");
         System.out.println("3. Volver al inicio");
         opcion = validarEntradaInt(3, true, 1, true);
 
         switch (opcion) {
             case 1:
-                System.out.println("Nuevo nombre:");
-                String nombre = Validador.validarEntradaTexto(true);
-                bolsillo.setNombre(nombre);
+                System.out.println("Nuevo saldo:");
+                double nuevoSaldo = Verificacion.validarEntradaDouble(Double.MAX_VALUE, true, 0, true);
+                bolsillo.setSaldo(nuevoSaldo);
                 break;
             case 2:
-                System.out.println("Nueva divisa:");
-                Utils.listarDivisas();
-                divisa = validarEntradaInt(Divisa.values().length, true, 1, true) - 1;
-                double[] nuevoSaldo = bolsillo.getDivisa().ConvertToDivisa(bolsillo.getSaldo(), Divisa.values()[divisa]);
-                bolsillo.setDivisa(Divisa.values()[divisa]);
-                bolsillo.setSaldo(nuevoSaldo[0]);
-                System.err.println("Tasa de cambio: " + String.format("%.2f",nuevoSaldo[1]));
-                System.err.println("Nuevo saldo: " + String.format("%.2f",nuevoSaldo[0]));
+                System.out.println("Nuevo presupuesto:");
+                double nuevoPrusupuesto = Verificacion.validarEntradaDouble(Double.MAX_VALUE, true, 0, true);
+                bolsillo.setPresupuesto(nuevoPrusupuesto);
                 break;
             case 3:
                 return;
@@ -534,34 +551,23 @@ public class Main {
         System.out.println("MODIFICACION REALIZADA CON EXITO");
     }
 
-    //Menú para modificar nombre, divisa o fecha minima de retiro de un colchon
+    //Menú para modificar nombre o fecha minima de retiro de un ahorro
     static void modificar(Ahorro colchon) {
-        int opcion, divisa;
+        int opcion;
         System.out.println("¿Qué desea modificar?");
         System.out.println("1. Nombre");
-        System.out.println("2. Divisa");
-        System.out.println("3. Cambiar fecha");
-        System.out.println("4. Volver al inicio");
-        opcion = validarEntradaInt(4, true, 1, true);
+        System.out.println("2. Cambiar fecha");
+        System.out.println("3. Volver al inicio");
+        opcion = validarEntradaInt(3, true, 1, true);
 
         switch (opcion) {
             case 1 -> {
                 System.out.println("Nuevo nombre:");
-                String nombre = Validador.validarEntradaTexto(true);
+                String nombre = Verificacion.validarEntradaTexto(true);
                 colchon.setNombre(nombre);
             }
             case 2 -> {
-                System.out.println("Nueva divisa:");
-                Utils.listarDivisas();
-                divisa = validarEntradaInt(Divisa.values().length, true, 1, true) - 1;
-                double[] nuevoSaldo = colchon.getDivisa().ConvertToDivisa(colchon.getSaldo(), Divisa.values()[divisa]);
-                colchon.setDivisa(Divisa.values()[divisa]);
-                colchon.setSaldo(nuevoSaldo[0]);
-                System.out.println("Tasa de cambio: " + String.format("%.2f",nuevoSaldo[1]));
-                System.out.println("El nuevo saldo es: " + String.format("%.2f",nuevoSaldo[0]));
-            }
-            case 3 -> {
-                System.out.println("¿Cuánto lo desea modificar?");
+                System.out.println("Qué desea modificar?");
                 System.out.println("1. Días");
                 System.out.println("2. Meses");
                 System.out.println("3. Años");
@@ -583,13 +589,13 @@ public class Main {
                         return;
                 }
                 System.out.println("Ingrese la cantidad que desa modificar (entre 1 y " + limite + ")");
-                total = Validador.validarEntradaInt(limite, true, 1, true);
+                total = Verificacion.validarEntradaInt(limite, true, 1, true);
 
                 System.out.println("¿Aumentar o reducir?");
                 System.out.println("1. Aumentar");
                 System.out.println("2. Reducir");
                 System.out.println("3. Volver al inicio");
-                int opcion2 = Validador.validarEntradaInt(3, true, 1, true);
+                int opcion2 = Verificacion.validarEntradaInt(3, true, 1, true);
                 if (opcion2 == 3) {
                     return;
                 } else if (opcion2 == 2) {
@@ -613,48 +619,37 @@ public class Main {
         System.out.println("MODIFICACION REALIZADA CON EXITO");
     }
 
+    //Menú para modificar nombre o nuevo objetivo de una meta
     static void modificar(Meta meta) {
-        int opcion, divisa;
-        boolean[] bol; 
+        int opcion;
+        boolean[] bol;
         System.out.println("¿Qué desea modificar?");
         System.out.println("1. Nombre");
-        System.out.println("2. Divisa");
-        System.out.println("3. Nuevo objetivo");
-        System.out.println("4. Volver al inicio");
-        opcion = validarEntradaInt(4, true, 1, true);
+        System.out.println("2. Nuevo objetivo");
+        System.out.println("3. Volver al inicio");
+        opcion = validarEntradaInt(3, true, 1, true);
 
         switch (opcion) {
             case 1:
                 System.out.println("Nuevo nombre:");
-                String nombre = Validador.validarEntradaTexto(true);
+                String nombre = Verificacion.validarEntradaTexto(true);
                 meta.setNombre(nombre);
                 break;
             case 2:
-                System.out.println("Nueva divisa:");
-                Utils.listarDivisas();
-                divisa = validarEntradaInt(Divisa.values().length, true, 1, true) - 1;
-                double[] nuevoSaldo = meta.getDivisa().ConvertToDivisa(meta.getSaldo(), Divisa.values()[divisa]);
-                meta.setDivisa(Divisa.values()[divisa]);
-                meta.setSaldo(nuevoSaldo[0]);
-                System.out.println("Tasa de cambio: " + String.format("%.2f",nuevoSaldo[1]));
-                System.out.println("Nuevo saldo: " + String.format("%.2f",nuevoSaldo[0]));
-                break;
-            case 3:
-                System.out.println("Nuevo Objetivo (en " + meta.getDivisa() + "): ");
-                bol = meta.setObjetivo(Validador.validarEntradaDouble(Double.MAX_VALUE, true, 0, false));
+                System.out.println("Nuevo Objetivo");
+                bol = meta.setObjetivo(Verificacion.validarEntradaDouble(Double.MAX_VALUE, true, 0, false));
                 if(!bol[0]) {
-                	System.out.println("Esta Meta ya esta cumplida por lo que no es posible cambiar el objetivo");
-                	return;
+                    System.out.println("Esta Meta ya esta cumplida por lo que no es posible cambiar el objetivo");
+                    return;
                 }
                 if (bol[1]) {
                     System.out.println("FELICIDADES HAS CUMPLIDO TU META " + meta.getNombre().toUpperCase());
-                    System.out.println("Escoge un Bolsillo al cual enviar el dinero para que lo puedas usar (" + String.format("%.2f",meta.getSaldo()) + " " + meta.getDivisa() + "): ");
-                    listarBolsillos(usuario);
-                    int option = Validador.validarEntradaInt(usuario.getBolsillos().size(), true, 1, true) - 1;
-                    Bolsillo bolsillo = usuario.getBolsillos().get(option);
-                    Movimiento movimiento = meta.terminar(bolsillo);
-                    System.out.println("Nuevo saldo en el bolsillo de: " + String.format("%.2f",bolsillo.getSaldo()) + " " + bolsillo.getDivisa());
-                    System.out.println("TRM usada de: " + String.format("%.2f",movimiento.getValorDestino()/movimiento.getValorOrigen()));
+                    System.out.println("Escoge un Bolsillo al cual enviar el dinero para que lo puedas usar (" + String.format("%.2f",meta.getSaldo())+"): ");
+                    Listador.listarBolsillos(usuario);
+                    int option = Verificacion.validarEntradaInt(usuario.getAhorros().size(), true, 1, true) - 1;
+                    Ahorro bolsillo = usuario.getAhorros().get(option);
+                    System.out.println("Nuevo saldo en el bolsillo de: " + String.format("%.2f",bolsillo.getSaldo()) + " " );
+
                 }else{
                     System.out.println("Restante para cumplir la meta de: " +String.format("%.2f",meta.getObjetivo()-meta.getSaldo()));
                 }
@@ -691,6 +686,17 @@ public class Main {
             return;
         }
 
+        System.out.println("¿Desea dar alguna garantía para reducir la taza de interes?");
+        System.out.println("1. Si");
+        System.out.println("2. No");
+        int opcGarantia = -1, opc;
+        opc = validarEntradaInt(2, true, 1, true);
+        if (opc == 1) {
+            System.out.println("Escoja el Elemento que dejara Como garantía");
+            listarGarantias();
+            opcGarantia = validarEntradaInt(Garantia.values().length, true, 1, true) - 1;
+        }
+
         System.out.println("Se generar�a un prestamo de un total de " + posibleCantidadPrestamo);
         System.out.println("a " + infoCuotas[0] + " periodos(meses)");
         System.out.println("con una cuota de " + infoCuotas[1]);
@@ -711,21 +717,13 @@ public class Main {
     //Si el usuario es apto para un prestado a largo plazo se le solicitan unos datos para guardar como garantía, se genera el préstamo y se agrega a los préstamos realizados por el usuario
     static void AceptadoPrestamo(double dineroSolicitado, int periodos) {
         String[] referencia = new String[2];
-        int opcGarantia = -1, opc;
+
         System.out.println("Escriba el nombre de una referencia: ");
         referencia[0] = validarEntradaTexto(true);
 
         System.out.println("Escriba el numero telefonico de la referencia: ");
         referencia[1] = validarEntradaTexto(true);
-        System.out.println("¿Desea dar alguna garantía para reducir la taza de interes?");
-        System.out.println("1. Si");
-        System.out.println("2. No");
-        opc = validarEntradaInt(2, true, 1, true);
-        if (opc == 1) {
-            System.out.println("Escoja el Elemento que dejara Como garantía");
-            listarGarantias();
-            opcGarantia = validarEntradaInt(Garantia.values().length, true, 1, true) - 1;
-        }
+
         System.out.println("Escoja el bolsillo al que se le enviará el dinero");
         listarBolsillos(usuario);
         // TODO: Check what is getBolsillos
@@ -804,15 +802,9 @@ public class Main {
                         System.out.println("Intereses pagados de: " + String.format("%.2f", dou[0]) + " ");
                         System.out.println("Abono a Capital de: " + String.format("%.2f", dou[1]) + " ");
                         if (prestamo.getTotalPagado() < prestamo.getMontoPrestado()) {
-                            System.out.println("Te queda por pagar: " + String.format("%.2f", (prestamo.getValorInicial() - prestamo.getValorPagado())));
-                            System.out.println("Se recomienda una cuota mensual de " + String.format("%.2f", prestamo.calcularCuotas()) + " " + prestamo.getDivisa());
+                            System.out.println("Te queda por pagar: " + String.format("%.2f", (prestamo.getMontoPrestado() - prestamo.getTotalPagado())));
                             System.out.println("Para poder dar cumplimiento a la fecha del cobro");
                         } else {
-                            Movimiento movimiento = prestamo.terminar(usuario.getBolsillos().get(0));
-                            if (movimiento != null) {
-                                System.out.println("Quedaste con un saldo a favor de: " + (prestamo.getValorPagado() - prestamo.getValorInicial()));
-                                System.out.println("Este se enviara a tu Bolsillo DEFAULT");
-                            }
                             System.out.println("FELICIDADES PAGASTE TU PRESTAMO");
                         }
                     }
