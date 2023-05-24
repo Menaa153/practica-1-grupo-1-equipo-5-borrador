@@ -53,7 +53,7 @@ public class Estadistica {
 
         posiblePrestamo = (posiblePrestamo + promedioAhorros) * multiplicadorCantidadAPrestar;
 
-        System.out.println(posiblePrestamo);
+        //System.out.println(posiblePrestamo);
         return posiblePrestamo;
     }
 

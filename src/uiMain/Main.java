@@ -49,9 +49,8 @@ public class Main {
             System.out.println("7. Modificar Ahorro/Bolsillo/Meta");
             System.out.println("8. Solicitar Prestamo");
             System.out.println("9. Abonar a un préstamo o Meta");
-            System.out.println("10. Logout");
-            System.out.println("11. Terminar ");
-            option = validarEntradaInt(11, true, 0, false);
+            System.out.println("10. Terminar ");
+            option = validarEntradaInt(10, true, 0, false);
 
             switch (option) {
                 case 1 -> saldosDisponibles(usuario);
@@ -64,9 +63,6 @@ public class Main {
                 case 8 -> solicitarPrestamo(usuario);
                 case 9 -> abonarPrestamoOMeta(usuario);
                 case 10 -> {
-                   return;
-                }
-                case 11 -> {
                     Serializador.serializar();
                     System.exit(0);
                 }
@@ -363,7 +359,7 @@ public class Main {
     private static void SacarDinero(Usuario usuario) {
         int option;
         Cuenta destino = null;
-        System.out.println("¿Desea hacer un envio o retiro?");
+        System.out.println("¿Desea hacer?");
         System.out.println("1. Retiro");
         System.out.println("2. Volver al menu");
         option = Verificacion.validarEntradaInt(3, true, 1, true);
@@ -658,6 +654,8 @@ public class Main {
         // Primera interaccion
         double posibleCantidadPrestamo = Estadistica.calcularPosibleCantidadPrestamo(usuario, ingresoMensual, edad, hijos);
 
+
+        if (posibleCantidadPrestamo >0){
         System.out.println("¿Cuanto dinero gasta en vivienda? (utilice ',' para el simbolo decimal): ");
         double gastoVivienda = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
 
@@ -694,6 +692,13 @@ public class Main {
                 System.out.println("PRESTAMO CANCELADO");
                 break;
         }
+        }
+        else{
+            System.out.println("Lo sentimos no eres apto para el prestamo");
+            System.out.println("PRESTAMO RECHAZADO/CANCELADO");
+            return;
+        }
+
     }
 
     //Si el usuario es apto para un prestado a largo plazo se le solicitan unos datos para guardar como garantía, se genera el préstamo y se agrega a los préstamos realizados por el usuario
