@@ -6,18 +6,14 @@ import static java.lang.Double.valueOf;
 
 public class Estadistica {
 
-    public static double calcularPosibleCantidadPrestamo(Usuario usuario, double ingresos, int edad, int hijos) {
+    public static double calcularPosibleCantidadPrestamo(Usuario usuario, double ingresos, int edad, int hijos, int opcGarantia) {
         if (!usuario.getAhorros().isEmpty()){
-        double promedioAhorros = calcularPromedioAhorros(usuario);
+            double promedioAhorros = calcularPromedioAhorros(usuario);
 
-        double posiblePrestamo = promediarVariablesDelUsuario(ingresos, promedioAhorros, edad, hijos);
-
-        return posiblePrestamo;
+            return promediarVariablesDelUsuario(ingresos, promedioAhorros, edad, hijos, opcGarantia);
         }
         else {
-            double posiblePrestamo = promediarVariablesDelUsuario(ingresos, 0, edad, hijos);
-
-            return posiblePrestamo;
+            return promediarVariablesDelUsuario(ingresos, 0, edad, hijos, opcGarantia);
         }
     }
     private static double calcularPromedioAhorros(Usuario usuario) {
@@ -31,29 +27,39 @@ public class Estadistica {
         return promedioAhorros;
     }
 
-    private static double promediarVariablesDelUsuario(double ingresos, double promedioAhorros, int edad, int hijos) {
+    private static double promediarVariablesDelUsuario(double ingresos, double promedioAhorros, int edad, int hijos, int opcGarantia) {
         // puntaje
         int multiplicadorCantidadAPrestar = 3;
-        double posiblePrestamo = 150000;
-
-        double ingresoDe12Meses = ingresos * 8;
+        double posiblePrestamo = 7 * (ingresos*0.3);
+        
+        double ingresoDe8Meses = ingresos * 8;
         // Se espera que el usuario tenga por lo menos 8 meses de ahorro de sus ingresos
         // Buscando validar su disciplina
-        if (promedioAhorros > ingresoDe12Meses) {
+        if (promedioAhorros > ingresoDe8Meses) {
             multiplicadorCantidadAPrestar += 4;
-        } else if (promedioAhorros > ingresoDe12Meses / 2) {
+        } else if (promedioAhorros > ingresoDe8Meses / 2) {
             multiplicadorCantidadAPrestar += 3;
+        } else if (promedioAhorros > ingresoDe8Meses / 2) {
+            multiplicadorCantidadAPrestar += 2;
         }
-        if (edad > 72) {
+        if (edad > 72 || edad < 16) {
             multiplicadorCantidadAPrestar -= 3;
         }
         if (hijos > 0) {
             multiplicadorCantidadAPrestar -= 2;
         }
+        if (opcGarantia > 0) {
+            Garantia garantia = Garantia.values()[opcGarantia];
+            switch (garantia) {
+                case Vivienda -> multiplicadorCantidadAPrestar += 7;
+                case Lote -> multiplicadorCantidadAPrestar += 5;
+                case Carro -> multiplicadorCantidadAPrestar += 3;
+                case Moto -> multiplicadorCantidadAPrestar += 1;
+            }
+        }
 
         posiblePrestamo = (posiblePrestamo + promedioAhorros) * multiplicadorCantidadAPrestar;
-
-        //System.out.println(posiblePrestamo);
+        
         return posiblePrestamo;
     }
 

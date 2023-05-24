@@ -647,7 +647,7 @@ public class Main {
 
         System.out.println("Digite su ingreso mensual utilice ',' para el simbolo decimal: ");
         double ingresoMensual = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
-
+        
         // Primera interaccion
         double posibleCantidadPrestamo = Estadistica.calcularPosibleCantidadPrestamo(usuario, ingresoMensual, edad, hijos);
 
@@ -672,6 +672,19 @@ public class Main {
             System.out.println("Escoja el Elemento que dejara Como garantia");
             listarGarantias();
             opcGarantia = validarEntradaInt(Garantia.values().length, true, 1, true) - 1;
+        }
+
+        // Primera interaccion
+        double posibleCantidadPrestamo = Estadistica.calcularPosibleCantidadPrestamo(usuario, ingresoMensual, edad, hijos, opcGarantia);
+
+        System.out.println("¿Cuanto dinero gasta en vivienda? (utilice ',' para el simbolo decimal): ");
+        double gastoVivienda = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
+
+        double[] infoCuotas = Prestamo.calcularCuotas(posibleCantidadPrestamo, ingresoMensual, gastoVivienda);
+        if (infoCuotas[0] == 0) {
+            System.out.println("Lo sentimos no eres apto para el prestamo");
+            System.out.println("PRESTAMO RECHAZADO/CANCELADO");
+            return;
         }
 
         System.out.println("Se generaria un prestamo de un total de " + posibleCantidadPrestamo);
