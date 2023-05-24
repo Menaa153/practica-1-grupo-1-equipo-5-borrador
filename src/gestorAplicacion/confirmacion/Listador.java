@@ -51,7 +51,7 @@ public class Listador {
             }
             return true;
         } else {
-            System.out.println("EL USUARIO NO POSEE COLCHONES...\n");
+            System.out.println("EL USUARIO NO POSEE AHORROS...\n");
             System.out.println("--------------------------------------------------------------------------");
             return false;
         }
