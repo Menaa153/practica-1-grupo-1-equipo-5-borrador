@@ -126,7 +126,7 @@ public class Main {
                     System.out.println("Digite la cantidad que desea ingresar en (utilice ',' para el símbolo decimal) (Cantidad maxima 10000000): ");
                     cantidad = Verificacion.validarEntradaDouble(10000000, true, 0, false);
                     new Ingreso((int)cantidad, LocalDate.now(), bolsillo);
-                    System.out.println("Su nuevo saldo es de " + String.format("%.2f",bolsillo.getSaldo()));
+                    System.out.println("Su nuevo saldo es de " + String.format("%.2f",(double)bolsillo.getSaldo()));
 
                   } 
             }
