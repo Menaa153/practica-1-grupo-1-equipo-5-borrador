@@ -1,5 +1,6 @@
 package gestorAplicacion.confirmacion;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
@@ -14,8 +15,9 @@ public class Datos implements Serializable {
         // 1. name of file, 2.setterName, 3. getterName
         {"usuarios.txt", "setUsuarios", "getUsuarios"}
 };
-private static final long serialVersionUID = 2979265545810011076L;
-private static List<Usuario> usuarios = new ArrayList<Usuario>();
+@Serial
+private static final long serialVersionUID = 0;
+private static List<Usuario> usuarios = new ArrayList<>();
 
 static {
     Deserializador.deserializar();
@@ -24,7 +26,13 @@ static {
 //Getters and setters
 
 public static Usuario getUsuarios() {
+    try {
     return usuarios.get(1);
+
+    } catch (Exception e) {
+        System.out.println("Error getting users: "+ e.getMessage());
+    }
+    return null;
 }
 
 

@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import baseDatos.Deserializador;
 import gestorAplicacion.confirmacion.Datos;
 import baseDatos.Serializador;
 import gestorAplicacion.confirmacion.Listador;
@@ -16,22 +17,25 @@ import static gestorAplicacion.confirmacion.Verificacion.*;
 import java.io.IOException;
 
 public class Main {
-    static Usuario usuario;
+    Usuario usuario;
 
 
     static Usuario login() {
         return Datos.getUsuarios();
     }
     public static void main(String[] args) throws IOException {
+        Deserializador.deserializar();
         App.intializeApp();
-        App.run();
+        Usuario usuario = login();
+        System.out.println(usuario);
+        if (usuario == null) {
+            usuario = new Usuario(1, "Julian", "default@correo.com");
+        }
 
-        /*Usuario usuario = new Usuario("1", "Jaime Alberto Guzman Luna", "jGuzman@unal.edu.co");
-        DataBank.nuevoUsuario(usuario);*/
+        //DataBank.nuevoUsuario(usuario);
 
         int option;
 
-        usuario = login();
         do {
             System.out.println("---- FINANZAS PERSONALES ----");
             System.out.println("|| USUARIO: " + usuario.getNombre() + " ||");
@@ -50,19 +54,22 @@ public class Main {
             option = validarEntradaInt(11, true, 0, false);
 
             switch (option) {
-                case 1 -> saldosDisponibles();
-                case 2 -> ingresaDinero();
-                case 3 -> moverDineroInterno();
-                case 4 -> SacarDinero();
-                case 5 -> agregarAhorro();
-                case 6 -> agregarMeta();
-                case 7 -> opcionModificar();
+                case 1 -> saldosDisponibles(usuario);
+                case 2 -> ingresaDinero(usuario);
+                case 3 -> moverDineroInterno(usuario);
+                case 4 -> SacarDinero(usuario);
+                case 5 -> agregarAhorro(usuario);
+                case 6 -> agregarMeta(usuario);
+                case 7 -> opcionModificar(usuario);
                 case 8 -> solicitarPrestamo(usuario);
-                case 9 -> abonarPrestamoOMeta();
+                case 9 -> abonarPrestamoOMeta(usuario);
                 case 10 -> {
                    return;
                 }
-                case 11 -> Serializador.serializar();
+                case 11 -> {
+                    Serializador.serializar();
+                    System.exit(0);
+                }
                 default -> System.out.println("OPCIÓN EN DESARROLLO");
             }
         } while (option != 12);
@@ -71,7 +78,7 @@ public class Main {
 
     //OPCIÓN1
     //Menú de cuentas disponibles y sus respectivos saldos del usuario seleccionado en el login()
-    static void saldosDisponibles() {
+    static void saldosDisponibles(Usuario usuario) {
         int option;
         System.out.println("¿Qué cuentas desea visualizar?");
         System.out.println("1. Bolsillos");
@@ -98,7 +105,7 @@ public class Main {
 
     //OPCIÓN2
     //Menú de selección a que cuenta va a realizar el ingreso de dinero y se llama a elección BancoMonto() donde se va a realizar el ingreso
-    static void ingresaDinero() {
+    static void ingresaDinero(Usuario usuario) {
         int option, opc;
         System.out.println("¿Para donde va su dinero?");
         System.out.println("1. Bolsillos");
@@ -152,7 +159,7 @@ public class Main {
 
 
     //Opcion3
-    static void moverDineroInterno() {
+    static void moverDineroInterno(Usuario usuario) {
         int option;
         System.out.println("¿Para donde va su dinero?");
         System.out.println("1. Bolsillos");
@@ -175,7 +182,7 @@ public class Main {
                 if (bool) {
                     int opc = validarEntradaInt(8, true, 1, true) - 1;
                     destino = list.get(opc);
-                    origen = seleccionarCuentaDeOrigen(destino);
+                    origen = seleccionarCuentaDeOrigen(usuario, destino);
 
                     if (origen instanceof Cuenta){
                         Cuenta origen2=(Cuenta)origen;
@@ -238,7 +245,7 @@ public class Main {
                 if (bool) {
                     int opc = validarEntradaInt(list.size(), true, 1, true) - 1;
                     destino = list.get(opc);
-                    origen = seleccionarCuentaDeOrigen(destino);
+                    origen = seleccionarCuentaDeOrigen(usuario, destino);
 
                     if (origen instanceof Cuenta){
                         Cuenta origen2=(Cuenta)origen;
@@ -293,7 +300,7 @@ public class Main {
         }
     }
 
-    static Object seleccionarCuentaDeOrigen(Object destino) {
+    static Object seleccionarCuentaDeOrigen(Usuario usuario, Object destino) {
         boolean repet = false;
         do {
             int option, opc;
@@ -353,7 +360,7 @@ public class Main {
     }
 
     //OPCION 4
-    private static void SacarDinero() {
+    private static void SacarDinero(Usuario usuario) {
         int option;
         Cuenta destino = null;
         System.out.println("¿Desea hacer un envio o retiro?");
@@ -364,7 +371,7 @@ public class Main {
             case 2:
                 return;
         }
-        Object origen = seleccionarCuentaDeOrigen(destino);
+        Object origen = seleccionarCuentaDeOrigen(usuario, destino);
 
         if (origen instanceof Categoria){
             boolean retirado=true;
@@ -410,7 +417,7 @@ public class Main {
 
     //OPCIÓN5
     //Se agrega un colchón al usuario que se seleccionó en el login() con el nombre, la divisa y la fecha de retiro seleccionada por el usuario
-    static void agregarAhorro() {
+    static void agregarAhorro(Usuario usuario) {
         int fecha;
         String nombre;
 
@@ -429,7 +436,7 @@ public class Main {
 
 
     //OPCION 6
-    private static void agregarMeta() {
+    private static void agregarMeta(Usuario usuario) {
         String nombre;
         double objetivo;
 
@@ -444,7 +451,7 @@ public class Main {
 
     //OPCION 7
     //Menú para la eleccion de modificacion, sea bolsillo, colchón o meta, luego se envia la eleccion a la funcion modificar
-    static void opcionModificar() {
+    static void opcionModificar(Usuario usuario) {
         int opcion, opc;
         System.out.println("¿Qué desea modificar?");
         System.out.println("1. Bolsillo");
@@ -595,7 +602,7 @@ public class Main {
     }
 
     //Menú para modificar nombre o nuevo objetivo de una meta
-    static void modificar(Meta meta) {
+    static void modificar(Usuario usuario, Meta meta) {
         int opcion;
         boolean[] bol;
         System.out.println("¿Qué desea modificar?");
@@ -681,7 +688,7 @@ public class Main {
         int opt = validarEntradaInt(2, true, 1, true);
         switch (opt) {
             case 1:
-                AceptadoPrestamo(posibleCantidadPrestamo, (int) infoCuotas[0], opcGarantia);
+                AceptadoPrestamo(usuario, posibleCantidadPrestamo, (int) infoCuotas[0], opcGarantia);
                 break;
             case 2:
                 System.out.println("PRESTAMO CANCELADO");
@@ -690,7 +697,7 @@ public class Main {
     }
 
     //Si el usuario es apto para un prestado a largo plazo se le solicitan unos datos para guardar como garantía, se genera el préstamo y se agrega a los préstamos realizados por el usuario
-    static void AceptadoPrestamo(double dineroSolicitado, int periodos, int opcGarantia) {
+    static void AceptadoPrestamo(Usuario usuario, double dineroSolicitado, int periodos, int opcGarantia) {
         String[] referencia = new String[2];
 
         System.out.println("Escriba el nombre de una referencia: ");
@@ -702,7 +709,7 @@ public class Main {
         System.out.println("Escoja el bolsillo al que se le enviará el dinero");
         listarBolsillos(usuario);
         
-        int bolsilloSeleccionado = validarEntradaInt(usuario.getAhorros().size(), true, 1, true) - 1;
+        int bolsilloSeleccionado = validarEntradaInt(Categoria.values().length, true, 1, true) - 1;
 
         List<Categoria> list = new ArrayList<>();
         for (Categoria bolsillos : Categoria.values()) {
@@ -722,7 +729,7 @@ public class Main {
     }
 
     //OPCION 9
-    private static void abonarPrestamoOMeta() {
+    private static void abonarPrestamoOMeta(Usuario usuario) {
         System.out.println("¿A que desea abonar?");
         System.out.println("1. Prestamos");
         System.out.println("2. Metas");

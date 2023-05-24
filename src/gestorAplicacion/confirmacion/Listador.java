@@ -81,7 +81,7 @@ public class Listador {
        if (!usuario.getPrestamos().isEmpty()) {
            int j = 1;
            for (Prestamo i : usuario.getPrestamos()) {
-               System.out.println(j + ". " + i.getClass().getSimpleName() + "\t\tcumplido: "+(i.isCumplida()?"Si":"No")+"\t\tValor: " + String.format("%.2f",i.getValorInicial()) + " cantidad Pagada: " + String.format("%.2f",i.getValorPagado()));
+               System.out.println(j + ". " + i.getClass().getSimpleName() + "\t\tcumplido: "+(i.isPagado()?"Si":"No")+"\t\tValor: " + String.format("%.2f",i.getMontoPrestado()) + " cantidad Pagada: " + String.format("%.2f",i.getTotalPagado()));
                j++;
                System.out.println("--------------------------------------------------------------------------");
            }
