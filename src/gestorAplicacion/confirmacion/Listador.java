@@ -51,7 +51,7 @@ public class Listador {
         if (!usuario.getAhorros().isEmpty()) {
             int j = 1;
             for (Ahorro i : usuario.getAhorros()) {
-                System.out.println(j + ". " + i.getNombre() + "\t\tDisponible: " + String.format("%d",i.getSaldo()) + "\t\tFecha de retiro: " + i.getFechaRetiro() );
+                System.out.println(j + ". " + i.getNombre() + "\t\tDisponible: " + String.format("%.2f",i.getSaldo()) + "\t\tFecha de retiro: " + i.getFechaRetiro());
                 j++;
                 System.out.println("--------------------------------------------------------------------------");
             }
