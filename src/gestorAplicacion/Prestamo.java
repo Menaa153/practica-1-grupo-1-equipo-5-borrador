@@ -72,7 +72,8 @@ public class Prestamo implements Abonable{
      * 
      */
     private static double calcularPeriodos(double cantidadQuePodraPagar, double posibleCantidadPrestamo) {
-        return Math.log( Math.abs(((Prestamo.tasa*posibleCantidadPrestamo) / cantidadQuePodraPagar) - 1)) / Math.log(Math.abs(1+Prestamo.tasa));
+        double periodos = Math.log( Math.abs( 1 - ((Prestamo.tasa*posibleCantidadPrestamo) / cantidadQuePodraPagar) )) / Math.log(Math.abs(1+Prestamo.tasa));
+        return Math.round(periodos);
     }
 
     public static double getTasa() {
