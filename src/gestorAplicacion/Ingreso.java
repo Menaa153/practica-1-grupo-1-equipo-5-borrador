@@ -13,36 +13,36 @@ public class Ingreso extends Transaccion{
 	private Cuenta cuentaDestino;
 	private Categoria categoria;
 
-	public Ingreso(int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
+	public Ingreso(double monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
 		this (monto, fechaCreacion, cuentaOrigen, cuentaDestino, Categoria.Nulo);
 	}
 
-	public Ingreso (int monto, LocalDate fechaCreacion, Cuenta cuentaDestino, Categoria categoria){
+	public Ingreso (double monto, LocalDate fechaCreacion, Cuenta cuentaDestino, Categoria categoria){
 		this (monto, fechaCreacion, null, cuentaDestino, categoria);
 
 	}
 
-	public Ingreso(int monto, LocalDate fechaCreacion,Cuenta cuentaDestino){
+	public Ingreso(double monto, LocalDate fechaCreacion,Cuenta cuentaDestino){
 		this (monto, fechaCreacion, null, cuentaDestino, Categoria.Nulo);
 	}
 
-	public Ingreso (int monto, LocalDate fechaCreacion, Categoria categoria){
+	public Ingreso (double monto, LocalDate fechaCreacion, Categoria categoria){
 		this (monto, fechaCreacion, null, null, categoria);
 
 	}
 
-	public Ingreso (int monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino, Categoria categoria) {
+	public Ingreso (double monto, LocalDate fechaCreacion, Cuenta cuentaOrigen, Cuenta cuentaDestino, Categoria categoria) {
 		super(monto, fechaCreacion);
 		this.cuentaOrigen=cuentaOrigen;
 		this.cuentaDestino=cuentaDestino;
 		this.categoria=categoria;
 
-		categoria.setSaldo(categoria.getSaldo()+monto);
-
 		if (categoria!=Categoria.Nulo){
-		  if (categoria.getSaldo()>=categoria.getPresupuesto()){
-			System.out.println(Alerta.Excede(categoria));
-		  }
+			categoria.setSaldo(categoria.getSaldo()+monto);
+		    if (categoria.getSaldo()>=categoria.getPresupuesto()){
+			    System.out.println(Alerta.Excede(categoria));
+
+		    }
 	    }
 		
 	 

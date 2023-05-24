@@ -19,7 +19,6 @@ import java.io.IOException;
 public class Main {
     Usuario usuario;
 
-
     static Usuario login() {
         return Datos.getUsuarios();
     }
@@ -89,7 +88,7 @@ public class Main {
             case 2 -> Listador.listarAhorros(usuario);
             case 3 -> Listador.listarMetas(usuario);
             case 4 -> {
-                int dineroTot = usuario.getDineroCuenta();
+                double dineroTot = usuario.getDineroCuenta();
                 System.out.println("--------------------------------------------------------------------------");
                 System.out.println("Dinero total: ");
                 System.out.println(dineroTot);
@@ -108,7 +107,7 @@ public class Main {
         System.out.println("2. Ahorros");
         System.out.println("3. Volver al inicio");
         option = validarEntradaInt(3, true, 1, true);
-        boolean bool = false;
+        boolean bool;
         switch (option) {
             case 1 -> {
                 List<Categoria> list=new ArrayList<>();
@@ -144,7 +143,7 @@ public class Main {
                double cantidad;
                System.out.println("Digite la cantidad que desea ingresar en (utilice ',' para el símbolo decimal) (Cantidad maxima 10000000): ");
                cantidad = Verificacion.validarEntradaDouble(10000000, true, 0, false);
-               Ingreso ingreso = new Ingreso((int)cantidad, LocalDate.now(), cuenta);
+               Ingreso ingreso = new Ingreso(cantidad, LocalDate.now(), cuenta);
                usuario.nuevoIngreso(ingreso);
                System.out.println("Su nuevo saldo es de " + String.format("%.2f",cuenta.getSaldo()));
 
@@ -185,9 +184,8 @@ public class Main {
                         if (origen != null && origen2.getSaldo() > 0) {
                             System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
                             double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
-                            int monto2=(int)monto;
 
-                            boolean retirado = origen2.retirar(monto2);
+                            boolean retirado = origen2.retirar(monto);
 
                             if (!retirado) {
                                 System.err.println("No fue posible retirar");
@@ -207,10 +205,9 @@ public class Main {
                         if (origen != null && origen2.getSaldo() > 0) {
                             System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
                             double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
-                            int monto2=(int)monto;
 
                             boolean retirado=true;
-                            if (monto2>origen2.getSaldo()){
+                            if (monto>origen2.getSaldo()){
                               retirado = false;
                             }
 
@@ -218,7 +215,7 @@ public class Main {
                                 System.err.println("No fue posible retirar");
                                 return;
                             }
-                            origen2.setSaldo(origen2.getSaldo()-monto2);
+                            origen2.setSaldo(origen2.getSaldo()-monto);
                             destino.setSaldo(destino.getSaldo()+monto);
                             System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
                             System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
@@ -248,15 +245,14 @@ public class Main {
                         if (origen != null && origen2.getSaldo() > 0) {
                             System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
                             double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
-                            int monto2=(int)monto;
 
-                            boolean retirado = origen2.retirar(monto2);
+                            boolean retirado = origen2.retirar(monto);
 
                             if (!retirado) {
                                 System.err.println("No fue posible retirar");
                                 return;
                             }
-                            destino.depositar(monto2);
+                            destino.depositar(monto);
                             System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
                             System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
                         }else {
@@ -270,10 +266,9 @@ public class Main {
                         if (origen != null && origen2.getSaldo() > 0) {
                             System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
                             double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
-                            int monto2=(int)monto;
 
                             boolean retirado=true;
-                            if (monto2>origen2.getSaldo()){
+                            if (monto>origen2.getSaldo()){
                               retirado = false;
                             }
 
@@ -281,8 +276,8 @@ public class Main {
                                 System.err.println("No fue posible retirar");
                                 return;
                             }
-                            origen2.setSaldo(origen2.getSaldo()-monto2);
-                            destino.depositar(monto2);
+                            origen2.setSaldo(origen2.getSaldo()-monto);
+                            destino.depositar(monto);
                             System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
                             System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
                         }else {
@@ -397,7 +392,7 @@ public class Main {
             if (origen != null && origen2.getSaldo()>0) {
                 System.out.println("Ingrese la cantidad a transferir (entre 0 y " + String.format("%.2f",origen2.getSaldo()) + ")");
                 double monto = Verificacion.validarEntradaDouble(origen2.getSaldo(), true, 0, false);
-                retirado = origen2.retirar((int)monto);
+                retirado = origen2.retirar(monto);
                 if (retirado) {
                     System.out.println("Retiro Exitoso");
                     System.out.println("Nuevo saldo en " + origen2.getNombre() + " es: " + String.format("%.2f",origen2.getSaldo()));

@@ -90,8 +90,8 @@ public class Usuario implements Serializable{
 
 	public void nuevoIngreso(Ingreso ingreso) {
 		if (ingreso.getCuentaDestino()!=null){
-		ingreso.getCuentaDestino().depositar(ingreso.getMonto());
-		ingresos.add(ingreso);
+			ingreso.getCuentaDestino().depositar(ingreso.getMonto());
+		    ingresos.add(ingreso);
 		}
 	}
 
