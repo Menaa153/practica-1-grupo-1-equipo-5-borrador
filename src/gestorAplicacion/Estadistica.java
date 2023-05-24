@@ -7,11 +7,18 @@ import static java.lang.Double.valueOf;
 public class Estadistica {
 
     public static double calcularPosibleCantidadPrestamo(Usuario usuario, double ingresos, int edad, int hijos) {
+        if (!usuario.getAhorros().isEmpty()){
         double promedioAhorros = calcularPromedioAhorros(usuario);
 
         double posiblePrestamo = promediarVariablesDelUsuario(ingresos, promedioAhorros, edad, hijos);
 
         return posiblePrestamo;
+        }
+        else {
+            double posiblePrestamo = promediarVariablesDelUsuario(ingresos, 0, edad, hijos);
+
+            return posiblePrestamo;
+        }
     }
     private static double calcularPromedioAhorros(Usuario usuario) {
         AtomicReference<Double> totalAhorros = new AtomicReference<>((double) 0);
