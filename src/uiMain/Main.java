@@ -645,21 +645,6 @@ public class Main {
 
         System.out.println("Digite su ingreso mensual utilice ',' para el simbolo decimal: ");
         double ingresoMensual = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
-        
-        // Primera interaccion
-        double posibleCantidadPrestamo = Estadistica.calcularPosibleCantidadPrestamo(usuario, ingresoMensual, edad, hijos);
-
-
-        if (posibleCantidadPrestamo >0){
-        System.out.println("¿Cuanto dinero gasta en vivienda? (utilice ',' para el simbolo decimal): ");
-        double gastoVivienda = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
-
-        double[] infoCuotas = Prestamo.calcularCuotas(posibleCantidadPrestamo, ingresoMensual, gastoVivienda);
-        if (infoCuotas[0] == 0) {
-            System.out.println("Lo sentimos no eres apto para el prestamo");
-            System.out.println("PRESTAMO RECHAZADO/CANCELADO");
-            return;
-        }
 
         System.out.println("¿Desea dar alguna garantia para reducir la tasa de interes?");
         System.out.println("1. Si");
@@ -675,6 +660,7 @@ public class Main {
         // Primera interaccion
         double posibleCantidadPrestamo = Estadistica.calcularPosibleCantidadPrestamo(usuario, ingresoMensual, edad, hijos, opcGarantia);
 
+        if (posibleCantidadPrestamo >0){
         System.out.println("¿Cuanto dinero gasta en vivienda? (utilice ',' para el simbolo decimal): ");
         double gastoVivienda = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
 
