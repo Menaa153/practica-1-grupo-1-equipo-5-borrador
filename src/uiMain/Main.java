@@ -39,7 +39,7 @@ public class Main {
         do {
             System.out.println("---- FINANZAS PERSONALES ----");
             System.out.println("|| USUARIO: " + usuario.getNombre() + " ||");
-            System.out.println("¿Qué operación desea realizar?");
+            System.out.println("¿Que operación desea realizar?");
             System.out.println("1. Ver Estadisticas de la cuenta");
             System.out.println("2. Ingresar dinero a su cuenta");
             System.out.println("3. Mover dinero en su cuenta");
@@ -47,7 +47,7 @@ public class Main {
             System.out.println("5. Agregar Ahorro a su cuenta");
             System.out.println("6. Agregar Meta a su cuenta");
             System.out.println("7. Modificar Ahorro/Bolsillo/Meta");
-            System.out.println("8. Solicitar Préstamo");
+            System.out.println("8. Solicitar Prestamo");
             System.out.println("9. Abonar a un préstamo o Meta");
             System.out.println("10. Logout");
             System.out.println("11. Terminar ");
@@ -80,7 +80,7 @@ public class Main {
     //Menú de cuentas disponibles y sus respectivos saldos del usuario seleccionado en el login()
     static void saldosDisponibles(Usuario usuario) {
         int option;
-        System.out.println("¿Qué cuentas desea visualizar?");
+        System.out.println("¿Que cuentas desea visualizar?");
         System.out.println("1. Bolsillos");
         System.out.println("2. Ahorros");
         System.out.println("3. Metas");
@@ -453,7 +453,7 @@ public class Main {
     //Menú para la eleccion de modificacion, sea bolsillo, colchón o meta, luego se envia la eleccion a la funcion modificar
     static void opcionModificar(Usuario usuario) {
         int opcion, opc;
-        System.out.println("¿Qué desea modificar?");
+        System.out.println("¿Que desea modificar?");
         System.out.println("1. Bolsillo");
         System.out.println("2. Ahorro");
         System.out.println("3. Meta");
@@ -516,7 +516,7 @@ public class Main {
     //Menú para modificar saldo o presupuesto de un bolsillo
     static void modificar(Categoria bolsillo) {
         int opcion;
-        System.out.println("¿Qué desea modificar?");
+        System.out.println("¿Que desea modificar?");
         System.out.println("1. Presupuesto");
         System.out.println("2. Volver al inicio");
         opcion = validarEntradaInt(2, true, 1, true);
@@ -536,7 +536,7 @@ public class Main {
     //Menú para modificar nombre o fecha minima de retiro de un ahorro
     static void modificar(Ahorro colchon) {
         int opcion;
-        System.out.println("¿Qué desea modificar?");
+        System.out.println("¿Que desea modificar?");
         System.out.println("1. Nombre");
         System.out.println("2. Cambiar fecha");
         System.out.println("3. Volver al inicio");
@@ -549,8 +549,8 @@ public class Main {
                 colchon.setNombre(nombre);
             }
             case 2 -> {
-                System.out.println("Qué desea modificar?");
-                System.out.println("1. Días");
+                System.out.println("Que desea modificar?");
+                System.out.println("1. Dias");
                 System.out.println("2. Meses");
                 System.out.println("3. Años");
                 System.out.println("4. Volver al inicio");
@@ -605,7 +605,7 @@ public class Main {
     static void modificar(Usuario usuario, Meta meta) {
         int opcion;
         boolean[] bol;
-        System.out.println("¿Qué desea modificar?");
+        System.out.println("¿Que desea modificar?");
         System.out.println("1. Nombre");
         System.out.println("2. Nuevo objetivo");
         System.out.println("3. Volver al inicio");
@@ -652,13 +652,13 @@ public class Main {
         System.out.println("¿Cuántos Años tiene usted?");
         int edad = validarEntradaInt(120, true, 18, true);
 
-        System.out.println("Digite su ingreso mensual utilice ',' para el símbolo decimal: ");
+        System.out.println("Digite su ingreso mensual utilice ',' para el simbolo decimal: ");
         double ingresoMensual = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
 
-        // Primera interacci�n
+        // Primera interaccion
         double posibleCantidadPrestamo = Estadistica.calcularPosibleCantidadPrestamo(usuario, ingresoMensual, edad, hijos);
 
-        System.out.println("¿Cuánto dinero gasta en vivienda? (utilice ',' para el símbolo decimal): ");
+        System.out.println("¿Cuanto dinero gasta en vivienda? (utilice ',' para el simbolo decimal): ");
         double gastoVivienda = validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
 
         double[] infoCuotas = Prestamo.calcularCuotas(posibleCantidadPrestamo, ingresoMensual, gastoVivienda);
@@ -668,18 +668,18 @@ public class Main {
             return;
         }
 
-        System.out.println("¿Desea dar alguna garantía para reducir la taza de interes?");
+        System.out.println("¿Desea dar alguna garantia para reducir la tasa de interes?");
         System.out.println("1. Si");
         System.out.println("2. No");
         int opcGarantia = -1, opc;
         opc = validarEntradaInt(2, true, 1, true);
         if (opc == 1) {
-            System.out.println("Escoja el Elemento que dejara Como garantía");
+            System.out.println("Escoja el Elemento que dejara Como garantia");
             listarGarantias();
             opcGarantia = validarEntradaInt(Garantia.values().length, true, 1, true) - 1;
         }
 
-        System.out.println("Se generar�a un prestamo de un total de " + posibleCantidadPrestamo);
+        System.out.println("Se generaria un prestamo de un total de " + posibleCantidadPrestamo);
         System.out.println("a " + infoCuotas[0] + " periodos(meses)");
         System.out.println("con una cuota de " + infoCuotas[1]);
         System.out.println("Aceptas estos terminos?");

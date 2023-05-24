@@ -26,7 +26,7 @@ public class Alerta {
     }
 
     public static String Excede(Categoria categoria){
-        return "Advertencia!!, has destinado todo el presupuesto para "+ categoria.name();
+        return "Advertencia!!, has superado el presupuesto para "+ categoria.name();
     }
 
     public static String Insuficiente(){

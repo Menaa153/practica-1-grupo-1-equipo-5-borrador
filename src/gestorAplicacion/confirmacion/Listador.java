@@ -27,8 +27,14 @@ public class Listador {
     	System.out.println("--------------------------------------------------------------------------");
         for (Categoria i : Categoria.values()) {
             if (j<9){
-                System.out.println(j + ". " + i);
-                j++;
+                if(j!=7){
+                    System.out.println(j + ". " + i+"\t\tSaldo: " + i.getSaldo()+"\t\tPresupuesto: "+i.getPresupuesto());
+                    j++;
+                }
+                else{
+                    System.out.println(j + ". " + i+"\tSaldo: " + i.getSaldo()+"\t\tPresupuesto: "+i.getPresupuesto());
+                    j++;
+                }
             }
 
             else{
@@ -51,7 +57,7 @@ public class Listador {
             }
             return true;
         } else {
-            System.out.println("EL USUARIO NO POSEE COLCHONES...\n");
+            System.out.println("EL USUARIO NO POSEE AHORROS...\n");
             System.out.println("--------------------------------------------------------------------------");
             return false;
         }
@@ -81,7 +87,7 @@ public class Listador {
        if (!usuario.getPrestamos().isEmpty()) {
            int j = 1;
            for (Prestamo i : usuario.getPrestamos()) {
-               System.out.println(j + ". " + i.getClass().getSimpleName() + "\t\tcumplido: "+(i.isPagado()?"Si":"No")+"\t\tValor: " + String.format("%.2f",i.getMontoPrestado()) + " cantidad Pagada: " + String.format("%.2f",i.getTotalPagado()));
+               System.out.println(j + ". " + i.getClass().getSimpleName() + "\t\tcumplido: "+(i.isPagado()?"Si":"No")+"\t\tValor: " + String.format("%.2f",i.getMontoPrestado()) + " \t\tcantidad Pagada: " + String.format("%.2f",i.getTotalPagado()));
                j++;
                System.out.println("--------------------------------------------------------------------------");
            }
