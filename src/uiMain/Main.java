@@ -200,7 +200,7 @@ public class Main {
                             destino.setSaldo(destino.getSaldo()+monto);
                             System.out.println("Nuevo saldo de la cuenta de origen de: " + String.format("%.2f",origen2.getSaldo()));
                             System.out.println("Nuevo saldo de la cuenta de destino de: " + String.format("%.2f",destino.getSaldo()));
-                        }else {
+                        } else {
             	        System.out.println("La cuenta no existe o no contiene dinero");
                         }
 
@@ -495,7 +495,7 @@ public class Main {
 
                 if (bool) {
                     opc = validarEntradaInt(list.size(), true, 1, true) - 1;
-                    modificar(list.get(opc));
+                    modificar(usuario, list.get(opc));
                 }
             }
         }
@@ -503,13 +503,13 @@ public class Main {
     }
 
     //Condicional para ver que opción se va a modificar segun el usuario
-    static void modificar(Object x) {
+    static void modificar(Usuario usuario, Object x) {
         if (x instanceof Categoria then) {
             modificar(then);
         } else if (x instanceof Ahorro then) {
             modificar(then);
         } else if (x instanceof Meta then) {
-            modificar(then);
+            modificar(usuario, then);
         }
     }
 
