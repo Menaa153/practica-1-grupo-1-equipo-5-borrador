@@ -14,7 +14,7 @@ public class Meta implements Serializable, Abonable<Transaccion>{
     private LocalDate fechaCumplimiento;
     private LocalDate fechaInicio;
     private double objetivo;
-    private int saldo = 0;
+    private double saldo = 0;
     
     //constructor
     public Meta(Usuario usuario, String nombre, LocalDate fechaInicio, double objetivo) {
@@ -69,7 +69,7 @@ public class Meta implements Serializable, Abonable<Transaccion>{
         return saldo;
     }
 
-    public void setSaldo(int saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
@@ -100,7 +100,7 @@ public class Meta implements Serializable, Abonable<Transaccion>{
     @Override
     public Transaccion abonar(double monto, Categoria origen){
         if (!this.cumplida) {
-            Retiro retiro = new Retiro((int)monto, LocalDate.now(), origen);
+            Retiro retiro = new Retiro(monto, LocalDate.now(), origen);
             boolean retirado = this.usuario.nuevoRetiro(retiro);
             if(!retirado) {
             	return null;
@@ -115,7 +115,7 @@ public class Meta implements Serializable, Abonable<Transaccion>{
     @Override
     public Transaccion abonar(double monto, Cuenta origen) {
         if (!this.cumplida) {
-            Retiro retiro = new Retiro((int)monto, LocalDate.now(), origen, (Cuenta)null);
+            Retiro retiro = new Retiro(monto, LocalDate.now(), origen, (Cuenta)null);
             boolean retirado = this.usuario.nuevoRetiro(retiro);
             if(!retirado) {
             	return null;
@@ -128,7 +128,7 @@ public class Meta implements Serializable, Abonable<Transaccion>{
 
 	@Override
 	public Transaccion terminar(Cuenta cuenta) {
-		int nuevoSaldo = this.saldo;
+		double nuevoSaldo = this.saldo;
         this.saldo = 0;
         this.cumplida = true;
         this.fechaCumplimiento = LocalDate.now();
@@ -139,7 +139,7 @@ public class Meta implements Serializable, Abonable<Transaccion>{
 
     @Override
     public Transaccion terminar(Categoria categoria){
-        int nuevoSaldo = this.saldo;
+        double nuevoSaldo = this.saldo;
         this.saldo = 0;
         this.cumplida = true;
         this.fechaCumplimiento = LocalDate.now();

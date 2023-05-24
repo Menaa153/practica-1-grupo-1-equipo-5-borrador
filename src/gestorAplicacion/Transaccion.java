@@ -9,20 +9,20 @@ public abstract class Transaccion implements Serializable{
 	private static final long serialVersionUID = 3102227367414792060L;
 
 
-	private int monto;
+	private double monto;
 	private LocalDate fechaCreacion;
-	protected Transaccion(int monto, LocalDate fechaCreacion) {
+	protected Transaccion(double monto, LocalDate fechaCreacion) {
 		this.monto=monto;
 		this.fechaCreacion=fechaCreacion;
 	}
 	//setters y getters
-	public void setMonto(int monto) {
+	public void setMonto(double monto) {
 		this.monto=monto;
 	}
 	public void setFechaCreacion(LocalDate fechaCreacion) {
 		this.fechaCreacion=fechaCreacion;
 	}
-	public int getMonto() {
+	public double getMonto() {
 		return monto;
 	}
 	public LocalDate getFechaCreacion() {

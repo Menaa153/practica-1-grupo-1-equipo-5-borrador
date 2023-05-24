@@ -10,14 +10,10 @@ public class Estadistica {
         if (!usuario.getAhorros().isEmpty()){
             double promedioAhorros = calcularPromedioAhorros(usuario);
 
-            double posiblePrestamo = promediarVariablesDelUsuario(ingresos, promedioAhorros, edad, hijos, opcGarantia);
-
-            return posiblePrestamo;
+            return promediarVariablesDelUsuario(ingresos, promedioAhorros, edad, hijos, opcGarantia);
         }
         else {
-            double posiblePrestamo = promediarVariablesDelUsuario(ingresos, 0, edad, hijos, opcGarantia);
-
-            return posiblePrestamo;
+            return promediarVariablesDelUsuario(ingresos, 0, edad, hijos, opcGarantia);
         }
     }
     private static double calcularPromedioAhorros(Usuario usuario) {
@@ -35,8 +31,7 @@ public class Estadistica {
         // puntaje
         int multiplicadorCantidadAPrestar = 3;
         double posiblePrestamo = 7 * (ingresos*0.3);
-        System.out.println((int)posiblePrestamo);
-
+        
         double ingresoDe8Meses = ingresos * 8;
         // Se espera que el usuario tenga por lo menos 8 meses de ahorro de sus ingresos
         // Buscando validar su disciplina
@@ -64,8 +59,7 @@ public class Estadistica {
         }
 
         posiblePrestamo = (posiblePrestamo + promedioAhorros) * multiplicadorCantidadAPrestar;
-        System.out.println((int)posiblePrestamo);
-
+        
         return posiblePrestamo;
     }
 

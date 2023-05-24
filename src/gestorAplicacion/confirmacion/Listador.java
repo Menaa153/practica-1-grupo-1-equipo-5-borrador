@@ -69,7 +69,7 @@ public class Listador {
         if (!usuario.getMetas().isEmpty()) {
             int j = 1;
             for (Meta i : usuario.getMetas()) {
-                System.out.println(j + ". " + i.getNombre() + "\t\tcumplido: "+(i.isCumplida()?"Si":"No")+"\t\tDisponible: " + String.format("%.2f",i.getSaldo())  + " cantidad objetivo: " + String.format("%.2f",i.getObjetivo()));
+                System.out.println(j + ". " + i.getNombre() + "\t\tcumplido: "+(i.isCumplida()?"Si":"No")+"\t\tDisponible: " + String.format("%.2f",i.getSaldo())  + " \t\tcantidad objetivo: " + String.format("%.2f",i.getObjetivo()));
                 j++;
                 System.out.println("--------------------------------------------------------------------------");
             }
