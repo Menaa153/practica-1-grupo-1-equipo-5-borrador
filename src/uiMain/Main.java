@@ -771,7 +771,7 @@ public class Main {
                 double monto = Verificacion.validarEntradaDouble(bolsillo.getSaldo(), true, 0, false);
                 Object resp = abonable.abonar(monto, bolsillo);
                 boolean bol2;
-                if (resp != null) {
+                if (resp == null) {
                     if (abonable instanceof Meta meta && resp instanceof Transaccion movimiento) {
                         System.out.println("Nuevo Saldo en la meta de: " + String.format("%.2f", meta.getSaldo()));
                         System.out.println("Nuevo saldo en la cuenta origen de: " + String.format("%.2f", bolsillo.getSaldo()));
