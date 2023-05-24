@@ -79,15 +79,17 @@ public class Main {
         System.out.println("1. Bolsillos");
         System.out.println("2. Ahorros");
         System.out.println("3. Metas");
-        System.out.println("4. Dinero total");
-        System.out.println("5. Volver al inicio");
-        option = validarEntradaInt(5, true, 0, false);
+        System.out.println("4. Prestamos");
+        System.out.println("5. Dinero total");
+        System.out.println("6. Volver al inicio");
+        option = validarEntradaInt(6, true, 0, false);
 
         switch (option) {
             case 1 -> listarBolsillos(usuario);
             case 2 -> Listador.listarAhorros(usuario);
             case 3 -> Listador.listarMetas(usuario);
-            case 4 -> {
+            case 4 -> Listador.listarPrestamos(usuario);
+            case 5 -> {
                 double dineroTot = usuario.getDineroCuenta();
                 System.out.println("--------------------------------------------------------------------------");
                 System.out.println("Dinero total: ");
