@@ -22,7 +22,7 @@ public class Estadistica {
         int cantidadAhorros =  usuario.getAhorros().size();
 
         double promedioAhorros = Double.valueOf(String.valueOf(totalAhorros))/ Double.valueOf(cantidadAhorros);
-        System.out.println(promedioAhorros);
+        //System.out.println(promedioAhorros);
 
         return promedioAhorros;
     }

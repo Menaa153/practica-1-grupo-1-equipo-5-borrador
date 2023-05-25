@@ -17,8 +17,10 @@ public class Verificacion {
         do {
             try {
                 if (repeted) {
+                    System.out.println("");
                     System.out.println(Alerta.Incorrecto(opcMin,opcMax));
                 }
+                System.out.println("");
                 System.out.println("Por favor ingrese su respuesta: ");
                 opcUsuario = entrada.nextDouble();
                 if(floor){
@@ -45,7 +47,9 @@ public class Verificacion {
         do {
             try {
                 if (repeted) {
+                    System.out.println("");
                     System.out.println("PORFAVOR INGRESE UN DATO VALIDO");
+                    System.out.println("");
                 }
                 opcUsuario =entrada.next() + entrada.nextLine();
                 if(!allowSpaces){

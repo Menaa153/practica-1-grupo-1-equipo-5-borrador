@@ -30,6 +30,7 @@ public static Usuario getUsuarios() {
     return usuarios.get(1);
 
     } catch (Exception e) {
+        
         System.out.println("Error getting users: "+ e.getMessage());
     }
     return null;
