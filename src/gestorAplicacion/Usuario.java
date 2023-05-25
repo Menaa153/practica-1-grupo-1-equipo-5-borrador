@@ -111,7 +111,6 @@ public class Usuario implements Serializable{
 	    }
 		else{
 			if (retiro.getCategoria().getSaldo()<=retiro.getMonto()){
-				retiro.getCategoria().setSaldo(retiro.getCategoria().getSaldo()-retiro.getMonto());
 				return true;
 
 			}

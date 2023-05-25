@@ -673,7 +673,7 @@ public class Main {
             return;
         }
 
-        System.out.println("Se generaria un prestamo de un total de " + posibleCantidadPrestamo);
+        System.out.println("Se generaria un prestamo de un total de " + String.format("%.2f",posibleCantidadPrestamo));
         System.out.println("a " + infoCuotas[0] + " periodos(meses)");
         System.out.println("con una cuota de " + infoCuotas[1]);
         System.out.println("Aceptas estos terminos?");
@@ -758,48 +758,50 @@ public class Main {
             default:
                 return;
         }
-        List<Categoria> list = new ArrayList<>();
-        System.out.println("Seleccione el Bolsillo desde el que va a abonar");
-        listarBolsillos(usuario);
 
+
+        List<Categoria> list = new ArrayList<>();
         for (Categoria bolsillos : Categoria.values()) {
             list.add(bolsillos);
+        }
 
-            Categoria bolsillo = list.get(Verificacion.validarEntradaInt(8, true, 1, true) - 1);
-            if (bolsillo.getSaldo() > 0) {
-                System.out.println("Ingrese la cantidad que va a abonar (entre 0 y " + String.format("%.2f", bolsillo.getSaldo()) + "):");
-                double monto = Verificacion.validarEntradaDouble(bolsillo.getSaldo(), true, 0, false);
-                Object resp = abonable.abonar(monto, bolsillo);
-                boolean bol2;
-                if (resp == null) {
-                    if (abonable instanceof Meta meta && resp instanceof Transaccion movimiento) {
-                        System.out.println("Nuevo Saldo en la meta de: " + String.format("%.2f", meta.getSaldo()));
-                        System.out.println("Nuevo saldo en la cuenta origen de: " + String.format("%.2f", bolsillo.getSaldo()));
-                        bol2 = meta.metaCumplida();
-                        if (bol2) {
-                            System.out.println("FELICIDADES HAS CUMPLIDO TU META " + meta.getNombre().toUpperCase());
-                            System.out.println("Escoge un Bolsillo al cual enviar el dinero para que lo puedas usar (" + String.format("%.2f", meta.getSaldo()) + "): ");
-                            listarBolsillos(usuario);
-                            int opt = Verificacion.validarEntradaInt(8, true, 1, true) - 1;
-                            Categoria bolsilloDes = list.get(opt);
-                            meta.terminar(bolsilloDes);
-                            System.out.println("Nuevo saldo en el bolsillo de: " + String.format("%.2f", bolsilloDes.getSaldo()));
-                        } else {
-                            System.out.println("Restante para cumplir la meta de: " + String.format("%.2f", meta.getObjetivo() - meta.getSaldo()));
-                        }
-                    } else if (abonable instanceof Prestamo prestamo && resp instanceof double[] dou) {
-                        if (prestamo.isPagado()) {
-                            System.out.println("FELICIDADES PAGASTE TU PRESTAMO");
-                        } else {
-                            System.out.println("Te queda por pagar: " + String.format("%.2f", (prestamo.getMontoPrestado() - prestamo.getTotalPagado())));
-                        }
+        System.out.println("Seleccione el Bolsillo desde el que va a abonar");
+        listarBolsillos(usuario);
+        Categoria bolsillo = list.get(Verificacion.validarEntradaInt(8, true, 1, true) - 1);
+        if (bolsillo.getSaldo() > 0) {
+            System.out.println("Ingrese la cantidad que va a abonar (entre 0 y " + String.format("%.2f", bolsillo.getSaldo()) + "):");
+            double monto = Verificacion.validarEntradaDouble(bolsillo.getSaldo(), true, 0, false);
+            Object resp = abonable.abonar(monto, bolsillo);
+            boolean bol2;
+            if (resp != null) {
+                if (abonable instanceof Meta meta && resp instanceof Transaccion movimiento) {
+                    System.out.println("Nuevo Saldo en la meta de: " + String.format("%.2f", meta.getSaldo()));
+                    System.out.println("Nuevo saldo en la cuenta origen de: " + String.format("%.2f", bolsillo.getSaldo()));
+                    bol2 = meta.metaCumplida();
+                    if (bol2) {
+                        System.out.println("FELICIDADES HAS CUMPLIDO TU META " + meta.getNombre().toUpperCase());
+                        System.out.println("Escoge un Bolsillo al cual enviar el dinero para que lo puedas usar (" + String.format("%.2f", meta.getSaldo()) + "): ");
+                        listarBolsillos(usuario);
+                        int opt = Verificacion.validarEntradaInt(8, true, 1, true) - 1;
+                        Categoria bolsilloDes = list.get(opt);
+                        meta.terminar(bolsilloDes);
+                        System.out.println("Nuevo saldo en el bolsillo de: " + String.format("%.2f", bolsilloDes.getSaldo()));
+                    } else {
+                        System.out.println("Restante para cumplir la meta de: " + String.format("%.2f", meta.getObjetivo() - meta.getSaldo()));
+                     }
+                } else if (abonable instanceof Prestamo prestamo && resp instanceof double[] dou) {
+                    if (prestamo.isPagado()) {
+                        System.out.println("FELICIDADES PAGASTE TU PRESTAMO");
+                    } else {
+                        System.out.println("Te queda por pagar: " + String.format("%.2f", (prestamo.getMontoPrestado() - prestamo.getTotalPagado())));
                     }
-                } else {
-                    System.out.println("Abono Fallido");
                 }
             } else {
-                System.out.println("La cuenta no existe o no contiene dinero");
+                System.out.println("Abono Fallido");
             }
+        } else {
+            System.out.println("La cuenta no existe o no contiene dinero");
         }
+        
     }
 }

@@ -100,13 +100,16 @@ public class Meta implements Serializable, Abonable<Transaccion>{
     @Override
     public Transaccion abonar(double monto, Categoria origen){
         if (!this.cumplida) {
-            Retiro retiro = new Retiro(monto, LocalDate.now(), origen);
-            boolean retirado = this.usuario.nuevoRetiro(retiro);
-            if(!retirado) {
-            	return null;
-            }
-            this.saldo += monto;
-            return retiro;
+            if (origen.getSaldo()>=monto){
+                Retiro retiro = new Retiro(monto, LocalDate.now(), origen);
+                this.saldo += monto;
+                return retiro;
+				
+			}
+			else{
+				return null;
+			}
+            
         }
         return null;
 

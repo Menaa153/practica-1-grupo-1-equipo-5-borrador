@@ -110,7 +110,7 @@ public class Prestamo implements Abonable{
 
     @Override
     public Object abonar(double monto, Cuenta origen) {
-        if (origen.retirar((int)monto)) {
+        if (origen.retirar(monto)) {
             this.totalPagado+=monto;
             if (this.totalPagado >= this.getMontoPrestado()) {
                 this.pagado = true;
@@ -124,16 +124,23 @@ public class Prestamo implements Abonable{
 
     @Override
     public Object abonar(double monto, Categoria origen) {
-        if (origen.getSaldo() >= monto) {
-            origen.setSaldo(origen.getSaldo() - monto);
-            this.totalPagado+=monto;
-            if (this.totalPagado >= this.getMontoPrestado()) {
-                this.pagado = true;
-                System.out.println("Felicidades pagaste tu prestamo");
-                return true;
+        double[] arreglo = new double[1];
+        if (!this.pagado) {
+            if (origen.getSaldo() >= monto) {
+                origen.setSaldo(origen.getSaldo() - monto);
+                this.totalPagado+=monto;
+                if (this.totalPagado >= this.getMontoPrestado()) {
+                    this.pagado = true;
+                }
+                arreglo[0]=monto;
+                return arreglo;
+
+                
+            }
+            else{
+                return null;
             }
         }
-        System.out.println("No puedes abonar, saldo insuficiente");
         return null;
     }
 

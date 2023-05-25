@@ -28,11 +28,11 @@ public class Listador {
         for (Categoria i : Categoria.values()) {
             if (j<9){
                 if(j!=7){
-                    System.out.println(j + ". " + i+"\t\tSaldo: " + i.getSaldo()+"\t\tPresupuesto: "+i.getPresupuesto());
+                    System.out.println(j + ". " + i+"\t\tSaldo: " + String.format("%.2f",i.getSaldo())+"\t\tPresupuesto: "+String.format("%.2f", i.getPresupuesto()));
                     j++;
                 }
                 else{
-                    System.out.println(j + ". " + i+"\tSaldo: " + i.getSaldo()+"\t\tPresupuesto: "+i.getPresupuesto());
+                    System.out.println(j + ". " + i+"\t\tSaldo: " + String.format("%.2f",i.getSaldo())+"\t\tPresupuesto: "+String.format("%.2f", i.getPresupuesto()));
                     j++;
                 }
             }
