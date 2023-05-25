@@ -40,7 +40,6 @@ public class Main {
     }
     public static void main(String[] args) throws IOException {
         Usuario usuario = login();
-        System.out.println(usuario);
         if (usuario == null) {
             usuario = new Usuario(1, "Julian", "default@correo.com");
             Datos.nuevoUsuario(usuario);
