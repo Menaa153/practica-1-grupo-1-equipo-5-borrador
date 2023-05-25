@@ -1,4 +1,4 @@
-package gestorAplicacion;
+package gestorAplicacion.interfaz;
 
 public enum Garantia {
     Vivienda,

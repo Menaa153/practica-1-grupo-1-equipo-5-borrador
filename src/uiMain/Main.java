@@ -8,7 +8,17 @@ import gestorAplicacion.confirmacion.Datos;
 import baseDatos.Serializador;
 import gestorAplicacion.confirmacion.Listador;
 import gestorAplicacion.confirmacion.Verificacion;
-import gestorAplicacion.*;
+import gestorAplicacion.interfaz.Abonable;
+import gestorAplicacion.interfaz.Ahorro;
+import gestorAplicacion.interfaz.Categoria;
+import gestorAplicacion.interfaz.Cuenta;
+import gestorAplicacion.interfaz.Estadistica;
+import gestorAplicacion.interfaz.Garantia;
+import gestorAplicacion.interfaz.Ingreso;
+import gestorAplicacion.interfaz.Meta;
+import gestorAplicacion.interfaz.Prestamo;
+import gestorAplicacion.interfaz.Transaccion;
+import gestorAplicacion.interfaz.Usuario;
 
 
 import static gestorAplicacion.confirmacion.Listador.*;
@@ -24,14 +34,11 @@ public class Main {
     }
     public static void main(String[] args) throws IOException {
         Deserializador.deserializar();
-        App.intializeApp();
         Usuario usuario = login();
         System.out.println(usuario);
         if (usuario == null) {
             usuario = new Usuario(1, "Julian", "default@correo.com");
         }
-
-        //DataBank.nuevoUsuario(usuario);
 
         int option;
 

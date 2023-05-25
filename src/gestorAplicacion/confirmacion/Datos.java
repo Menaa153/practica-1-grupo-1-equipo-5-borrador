@@ -6,7 +6,7 @@ import java.util.List;
 import java.io.Serializable;
 
 import baseDatos.Deserializador;
-import gestorAplicacion.Usuario;
+import gestorAplicacion.interfaz.Usuario;
 
 
 public class Datos implements Serializable {

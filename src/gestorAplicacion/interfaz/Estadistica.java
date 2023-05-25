@@ -1,4 +1,4 @@
-package gestorAplicacion;
+package gestorAplicacion.interfaz;
 
 import java.util.concurrent.atomic.AtomicReference;
 

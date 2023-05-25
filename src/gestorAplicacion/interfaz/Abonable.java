@@ -1,4 +1,4 @@
-package gestorAplicacion;
+package gestorAplicacion.interfaz;
 
 public interface Abonable <T> {
 	T abonar(double monto, Cuenta origen);

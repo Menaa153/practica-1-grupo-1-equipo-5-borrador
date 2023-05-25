@@ -1,8 +1,7 @@
-package gestorAplicacion;
+package gestorAplicacion.interfaz;
 
 import java.time.LocalDate;
 
-import static java.time.temporal.ChronoUnit.MONTHS;
 
 public class Prestamo implements Abonable{
     static double tasa = 0.18;

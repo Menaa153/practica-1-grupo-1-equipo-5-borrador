@@ -6,7 +6,12 @@ import static java.time.temporal.ChronoUnit.MONTHS;
 
 //import gestorAplicacion.economia.Garantia;
 //import gestorAplicacion.Prestamo;
-import gestorAplicacion.*;
+import gestorAplicacion.interfaz.Ahorro;
+import gestorAplicacion.interfaz.Categoria;
+import gestorAplicacion.interfaz.Garantia;
+import gestorAplicacion.interfaz.Meta;
+import gestorAplicacion.interfaz.Prestamo;
+import gestorAplicacion.interfaz.Usuario;
 
 public class Listador {
 
@@ -110,5 +115,3 @@ public class Listador {
         return Math.abs(MONTHS.between(inicio, fin));
     }
 }
-
-    

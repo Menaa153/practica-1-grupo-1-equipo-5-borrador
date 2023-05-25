@@ -1,5 +1,5 @@
 package gestorAplicacion.confirmacion;
-import gestorAplicacion.Categoria;
+import gestorAplicacion.interfaz.Categoria;
 
 public class Alerta {
 
