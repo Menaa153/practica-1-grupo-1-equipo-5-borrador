@@ -76,6 +76,7 @@ public class Main {
     //Menú de cuentas disponibles y sus respectivos saldos del usuario seleccionado en el login()
     static void saldosDisponibles(Usuario usuario) {
         int option;
+        System.out.println("");
         System.out.println("¿Que cuentas desea visualizar?");
         System.out.println("1. Bolsillos");
         System.out.println("2. Ahorros");
@@ -94,6 +95,7 @@ public class Main {
             case 5 -> {
                 double dineroTot = usuario.getDineroCuenta();
                 System.out.println("");
+                System.out.println("");
                 System.out.println("Dinero total: ");
                 System.out.println(dineroTot);
                 
@@ -107,6 +109,7 @@ public class Main {
     //Menú de selección a que cuenta va a realizar el ingreso de dinero y se llama a elección BancoMonto() donde se va a realizar el ingreso
     static void ingresaDinero(Usuario usuario) {
         int option, opc;
+        System.out.println("");
         System.out.println("¿Para donde va su dinero?");
         System.out.println("1. Bolsillos");
         System.out.println("2. Ahorros");
@@ -117,6 +120,7 @@ public class Main {
         switch (option) {
             case 1 -> {
                 List<Categoria> list=new ArrayList<>();
+                System.out.println("");
                 System.out.println("Bolsillo: ");
                 bool = listarBolsillos(usuario);
 
@@ -135,11 +139,14 @@ public class Main {
                     new Ingreso((int)cantidad, LocalDate.now(), bolsillo);
                     System.out.println("");
                     System.out.println("Su nuevo saldo es de " + String.format("%.2f",(double)bolsillo.getSaldo()));
+                    System.out.println("");
+                    System.out.println("");
 
                   } 
             }
             case 2 -> {
                 List<Cuenta> list = new ArrayList<>();
+                System.out.println("");
                 System.out.println("Ahorros: ");
                 bool = Listador.listarAhorros(usuario);
                 list.addAll(usuario.getAhorros());
@@ -156,6 +163,7 @@ public class Main {
                usuario.nuevoIngreso(ingreso);
                System.out.println("");
                System.out.println("Su nuevo saldo es de " + String.format("%.2f",cuenta.getSaldo()));
+               System.out.println("");
 
              }
             } 
@@ -166,6 +174,7 @@ public class Main {
     //Opcion3
     static void moverDineroInterno(Usuario usuario) {
         int option;
+        System.out.println("");
         System.out.println("¿Para donde va su dinero?");
         System.out.println("1. Bolsillos");
         System.out.println("2. Ahorros");
@@ -178,6 +187,7 @@ public class Main {
                 Categoria destino; 
                 Object origen;
                 List<Categoria> list = new ArrayList<>();
+                System.out.println("");
                 System.out.println("Bolsillos: ");
                 bool = listarBolsillos(usuario);
 
@@ -262,6 +272,7 @@ public class Main {
                 Cuenta destino;
                 Object origen;
                 List<Cuenta> list = new ArrayList<>();
+                System.out.println("");
                 System.out.println("Ahorros: ");
                 bool = Listador.listarAhorros(usuario);
                 list.addAll(usuario.getAhorros());
@@ -354,6 +365,7 @@ public class Main {
             switch (option) {
                 case 1 -> {
                     List<Categoria> list = new ArrayList<>();
+                    System.out.println("");
                     System.out.println("Bolsillos: ");
                     bool = listarBolsillos(usuario);
 
@@ -377,6 +389,7 @@ public class Main {
                 }
                 case 2 -> {
                     List<Cuenta> list = new ArrayList<>();
+                    System.out.println("");
                     System.out.println("Ahorros: ");
                     bool = Listador.listarAhorros(usuario);
                     list.addAll(usuario.getAhorros());
@@ -387,6 +400,7 @@ public class Main {
                         if (origen == destino) {
                             System.out.println("");
                             System.out.println("NO PUEDES ENVIAR EL DINERO AL MISMO LUGAR");
+                            System.out.println("");
                             repet = true;
                         } else {
                             return origen;
@@ -403,6 +417,7 @@ public class Main {
     private static void SacarDinero(Usuario usuario) {
         int option;
         Cuenta destino = null;
+        System.out.println("");
         System.out.println("¿Desea hacer?");
         System.out.println("1. Retiro");
         System.out.println("2. Volver al menu");
@@ -429,11 +444,13 @@ public class Main {
                     System.out.println("");
                     System.out.println("Retiro Exitoso");
                     System.out.println("Nuevo saldo en " + origen2.name() + " es: " + String.format("%.2f",origen2.getSaldo()));
+                    System.out.println("");
                 }
                 else{
                     System.out.println("");
                     System.out.println("");
                     System.out.println("Retiro Fallido");
+                    System.out.println("");
                 }
 
             }else {
@@ -455,11 +472,13 @@ public class Main {
                     System.out.println("");
                     System.out.println("Retiro Exitoso");
                     System.out.println("Nuevo saldo en " + origen2.getNombre() + " es: " + String.format("%.2f",origen2.getSaldo()));
+                    System.out.println("");
                 }
                 else{
                     System.out.println("");
                     System.out.println("");
                     System.out.println("Retiro Fallido");
+                    System.out.println("");
                 }
             }else {
                 System.out.println("");
@@ -475,7 +494,8 @@ public class Main {
     static void agregarAhorro(Usuario usuario) {
         int fecha;
         String nombre;
-
+        
+        System.out.println("");
         System.out.println("Escriba el nombre que desea asignarle al ahorro: ");
         nombre = Verificacion.validarEntradaTexto(true);
 
@@ -484,6 +504,7 @@ public class Main {
         for (int i = 1; i <= 12; i++) {
             System.out.println(i + ". " + LocalDate.now().plusMonths(i));
         }
+        System.out.println("");
         fecha = validarEntradaInt(12, true, 1, true);
         Ahorro ahorro = new Ahorro(usuario, nombre, LocalDate.now().plusMonths(fecha));
         usuario.nuevoAhorro(ahorro);
@@ -491,6 +512,8 @@ public class Main {
         System.out.println("");
         System.out.println("");
         System.out.println("ahorro " + nombre + " AGREGADO CON EXITO");
+        System.out.println("");
+        System.out.println("");
     }
 
 
@@ -498,7 +521,8 @@ public class Main {
     private static void agregarMeta(Usuario usuario) {
         String nombre;
         double objetivo;
-
+        
+        System.out.println("");
         System.out.println("Escriba el nombre que desea asignarle a la meta: ");
         nombre = Verificacion.validarEntradaTexto(true);
         System.out.println("");
@@ -510,12 +534,14 @@ public class Main {
         System.out.println("");
         System.out.println("");
         System.out.println("Meta Agregada Con Exito");
+        System.out.println("");
     }
 
     //OPCION 7
     //Menú para la eleccion de modificacion, sea bolsillo, colchón o meta, luego se envia la eleccion a la funcion modificar
     static void opcionModificar(Usuario usuario) {
         int opcion, opc;
+        System.out.println("");
         System.out.println("¿Que desea modificar?");
         System.out.println("1. Bolsillo");
         System.out.println("2. Ahorro");
@@ -528,6 +554,7 @@ public class Main {
         switch (opcion) {
             case 1 -> {
                 List<Categoria> list = new ArrayList<>();
+                System.out.println("");
                 System.out.println("Bolsillos: ");
                 bool = Listador.listarBolsillos(usuario);
 
@@ -542,6 +569,7 @@ public class Main {
             }
             case 2 -> {
                 List<Ahorro> list = new ArrayList<>();
+                System.out.println("");
                 System.out.println("Ahorros: ");
                 bool = Listador.listarAhorros(usuario);
                 list.addAll(usuario.getAhorros());
@@ -553,6 +581,7 @@ public class Main {
             }
             case 3 -> {
                 List<Meta> list = new ArrayList<>();
+                System.out.println("");
                 System.out.println("Metas: ");
                 bool = Listador.listarMetas(usuario);
                 list.addAll(usuario.getMetas());
@@ -580,6 +609,7 @@ public class Main {
     //Menú para modificar saldo o presupuesto de un bolsillo
     static void modificar(Categoria bolsillo) {
         int opcion;
+        System.out.println("");
         System.out.println("¿Que desea modificar?");
         System.out.println("1. Presupuesto");
         System.out.println("2. Volver al inicio");
@@ -588,6 +618,7 @@ public class Main {
 
         switch (opcion) {
             case 1:
+            System.out.println("");
                 System.out.println("Nuevo presupuesto:");
                 double nuevoPrusupuesto = Verificacion.validarEntradaDouble(Double.MAX_VALUE, true, 0, false);
                 bolsillo.setPresupuesto(nuevoPrusupuesto);
@@ -598,11 +629,13 @@ public class Main {
         System.out.println("");
         System.out.println("");
         System.out.println("MODIFICACION REALIZADA CON EXITO");
+        System.out.println("");
     }
 
     //Menú para modificar nombre o fecha minima de retiro de un ahorro
     static void modificar(Ahorro colchon) {
         int opcion;
+        System.out.println("");
         System.out.println("¿Que desea modificar?");
         System.out.println("1. Nombre");
         System.out.println("2. Cambiar fecha");
@@ -612,11 +645,13 @@ public class Main {
 
         switch (opcion) {
             case 1 -> {
+                System.out.println("");
                 System.out.println("Nuevo nombre:");
                 String nombre = Verificacion.validarEntradaTexto(true);
                 colchon.setNombre(nombre);
             }
             case 2 -> {
+                System.out.println("");
                 System.out.println("Que desea modificar?");
                 System.out.println("1. Dias");
                 System.out.println("2. Meses");
@@ -639,9 +674,11 @@ public class Main {
                     case 4:
                         return;
                 }
+                System.out.println("");
                 System.out.println("Ingrese la cantidad que desa modificar (entre 1 y " + limite + ")");
                 total = Verificacion.validarEntradaInt(limite, true, 1, true);
-
+                
+                System.out.println("");
                 System.out.println("¿Aumentar o reducir?");
                 System.out.println("1. Aumentar");
                 System.out.println("2. Reducir");
@@ -671,12 +708,14 @@ public class Main {
         System.out.println("");
         System.out.println("");
         System.out.println("MODIFICACION REALIZADA CON EXITO");
+        System.out.println("");
     }
 
     //Menú para modificar nombre o nuevo objetivo de una meta
     static void modificar(Usuario usuario, Meta meta) {
         int opcion;
         boolean[] bol;
+        System.out.println("");
         System.out.println("¿Que desea modificar?");
         System.out.println("1. Nombre");
         System.out.println("2. Nuevo objetivo");
@@ -686,6 +725,7 @@ public class Main {
 
         switch (opcion) {
             case 1:
+            System.out.println("");
                 System.out.println("Nuevo nombre:");
                 String nombre = Verificacion.validarEntradaTexto(true);
                 meta.setNombre(nombre);
@@ -698,6 +738,7 @@ public class Main {
                     System.out.println("");
                     System.out.println("");
                     System.out.println("Esta Meta ya esta cumplida por lo que no es posible cambiar el objetivo");
+                    System.out.println("");
                     return;
                 }
                 if (bol[1]) {
@@ -711,6 +752,7 @@ public class Main {
                     Ahorro bolsillo = usuario.getAhorros().get(option);
                     System.out.println("");
                     System.out.println("Nuevo saldo en el bolsillo de: " + String.format("%.2f",bolsillo.getSaldo()) + " " );
+                    System.out.println("");
 
                 }else{
                     System.out.println("");
@@ -723,6 +765,8 @@ public class Main {
         System.out.println("");
         System.out.println("");
         System.out.println("MODIFICACION REALIZADA CON EXITO");
+        System.out.println("");
+        System.out.println("");
     }
 
     //OPCIÓN 8
@@ -791,6 +835,7 @@ public class Main {
                 System.out.println("");
                 System.out.println("");
                 System.out.println("PRESTAMO CANCELADO");
+                System.out.println("");
                 break;
         }
         }
@@ -846,6 +891,7 @@ public class Main {
 
     //OPCION 9
     private static void abonarPrestamoOMeta(Usuario usuario) {
+        System.out.println("");
         System.out.println("¿A que desea abonar?");
         System.out.println("1. Prestamos");
         System.out.println("2. Metas");
@@ -921,9 +967,12 @@ public class Main {
                         System.out.println("");
                         System.out.println("");
                         System.out.println("FELICIDADES PAGASTE TU PRESTAMO");
+                        System.out.println("");
+                        System.out.println("");
                     } else {
                         System.out.println("");
                         System.out.println("Te queda por pagar: " + String.format("%.2f", (prestamo.getMontoPrestado() - prestamo.getTotalPagado())));
+                        System.out.println("");
                     }
                 }
             } else {

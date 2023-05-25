@@ -20,7 +20,7 @@ public class Verificacion {
                     System.out.println("");
                     System.out.println(Alerta.Incorrecto(opcMin,opcMax));
                 }
-                System.out.println("");
+                
                 System.out.println("Por favor ingrese su respuesta: ");
                 opcUsuario = entrada.nextDouble();
                 if(floor){
